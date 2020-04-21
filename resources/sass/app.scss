@@ -1,0 +1,158 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@font-face {
+    font-family: OptimusPrinceps;
+    src: url('/fonts/Courgette-Regular.ttf');
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'OptimusPrinceps', sans-serif;
+    color: #545b62;
+}
+
+input, textarea {
+    font-size: 12px !important;
+    padding: 2px;
+    border-radius: 2px;
+    border: 1px solid #e9ecef;
+    outline: none;
+}
+
+.group-line {
+    cursor: pointer;
+    padding: 0 6px;
+    border-bottom: 1px solid #e9ecef;
+    line-height: 20px;
+}
+
+.group-text {
+    width: calc(100% - 28px);
+    display: inline-block;
+    vertical-align: baseline;
+    font-size: 12px;
+}
+#steps .group-text {
+    width: calc(100% - 54px);
+}
+
+#list a {
+    outline: none;
+    border: none;
+}
+
+.toggle-item {
+    font-weight: bold;
+    color: #3490dc;
+}
+
+.toggle-item:before {
+    content: "\25CF ";
+    position: absolute;
+    margin-top: -1px;
+    margin-left: -12px;
+    font-size: 16px;
+    color: #2d995b;
+}
+
+.toggle-valid {
+    border: 1px solid #38c172;
+}
+
+.group-line button {
+    display: inline-block;
+    vertical-align: baseline;
+    border: none;
+}
+
+.span-time {
+    font-size: 0.75rem;
+}
+
+.span-time input {
+    background: none;
+    border: none;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    font-family: 'OptimusPrinceps', sans-serif;
+    padding: 0.4rem 0.75rem;
+    font-weight: 900;
+    color: #545b62;
+}
+
+.time-to-add {
+    font-size: 12px;
+    margin: 8px;
+    color: #2d995b;
+    font-weight: 800;
+}
+.no-border {
+    border: none;
+}
+
+.eval-text {
+    width: 100%;
+    font-size: 12px;
+    margin-bottom: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.eval-txt {
+    width: calc(100% - 100px);
+}
+
+.eval-time {
+    width: 60px;
+}
+
+.eval-btn {
+    width: 20px;
+}
+
+.table.table-sm {
+    font-size: 12px;
+}
+
+.inline {
+    display: inline-block;
+    vert-align: middle;
+    position: relative;
+}
+
+.drop-box {
+    position: absolute;
+    z-index: 10;
+    width: fit-content;
+    margin-top: 0;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 black;
+}
+
+.down-item:hover {
+    font-weight: bold;
+}
+
+.down-item {
+    font-size: 12px;
+}
+
+span.bold {
+    font-family: 'OptimusPrinceps', sans-serif;
+    color: #545b62;
+}
+
+.form-control-sm {
+    width: calc(100% - 32px);
+}
+

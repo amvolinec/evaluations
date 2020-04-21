@@ -1,0 +1,192 @@
+<template>
+    <div class="list-steps" id="steps">
+        <div v-if="task > 0">
+            <div class="form-group" v-if="edit == false">
+                <div class="inline mb-2" style="width: calc(100% + 30px);">
+                    <input class="form-control-sm" type="text" v-model="stepToAdd" placeholder="Name" @keyup="findStep($event)">
+                    <div class="drop-box" v-if="temps.length > 0 && !escaped">
+                        <div class="group-line down-item" v-for="temp in temps" @click="selectTemplate(temp)"
+                             v-bind:temp-id="temp.id">{{ temp.name }} ({{ temp.time }} min.)
+                        </div>
+                    </div>
+                </div>
+
+                <input type="text" v-model="timeToAdd" placeholder="Time: 1d:1h:15min" @keyup="checkTime"
+                       @focusout="escaped=false" v-bind:class="{ 'toggle-valid': timeValid }">
+                <button class="btn btn-sm btn-success" @click="addStep"><span>✓</span></button>
+            </div>
+
+
+            <div class="form-group" v-if="edit == true">
+                <input type="hidden" v-model="stepEdit.id">
+                <input type="text" v-model="stepEdit.name" placeholder="Name">
+                <input type="number" v-model="stepEdit.time" placeholder="Time (min)">
+                <button class="btn btn-sm btn-success" @click="saveStep">Save Step</button>
+            </div>
+
+            <span v-if="time > 0" class="span-time">
+            <label>Time (min): </label>
+            <input class="step-time" type="text" v-model="time" disabled>
+        </span>
+            <div class="group-line" v-for="step in steps">
+                <div>
+                    <div class="group-text" v-bind:class="{ 'toggle-item': step.selected }"
+                         @click="changeStep(step, $event)" v-bind:tesk-id="step.id">{{ step.name }} ({{ step.time }}
+                        min.)
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" @click="editStep(step)" v-bind:step-id="step.id">e
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" @click="deleteStep(step)" v-bind:step-id="step.id">x
+                    </button>
+
+                </div>
+            </div>
+            <div class="mt-1" v-if="total > 0">
+                <div class="time-to-add">Total time: <span class="total-time" v-text="total / 60"></span> h.</div>
+                <button class="btn btn-sm btn-success" @click="addToEval">Add To Evaluation</button>
+            </div>
+        </div>
+        <div v-if="task == 0">Select Task first...</div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                task: 0,
+                time: 0,
+                total: 0,
+                timeValid: false,
+                edit: false,
+                escaped: false,
+                steps: [],
+                temps: [],
+                stepToAdd: '',
+                timeToAdd: '',
+                stepEdit: {},
+            }
+        },
+        created() {
+            this.fetchSteps();
+        },
+        mounted() {
+            this.$root.$on('taskChanged', (task) => {
+                this.task = task;
+                this.fetchSteps();
+            });
+        },
+        methods: {
+            addStep() {
+                axios.post('/step', {
+                    name: this.stepToAdd,
+                    time: this.time,
+                    task_id: this.task,
+                    group_id: this.$root.$data.group,
+                })
+                    .then((r) => {
+                        this.steps = r.data;
+                    })
+                    .catch((error) => {
+                        this.$root.fetchError(error);
+                    });
+                this.stepToAdd = '';
+                this.timeToAdd = '';
+                this.timeValid = false;
+                this.escaped = false;
+                this.time = 0;
+            },
+            changeStep(step, e) {
+                if (e.ctrlKey) {
+                    step.selected = !step.selected;
+                } else {
+                    step.selected = !step.selected;
+                }
+                this.sumTotal();
+                this.$root.$data.step = step.id;
+            },
+            fetchSteps() {
+                let task = this.$root.$data.task ? this.$root.$data.task : this.task;
+                this.task = task;
+                axios.get('/steps/' + task).then(response => {
+                    this.steps = response.data;
+                }).catch((error) => {
+                    this.$root.fetchError(error);
+                });
+            },
+            deleteStep(step) {
+                let r = confirm("Delete this step?");
+                if (r === true) {
+                    axios.post('steps', {id: step.id, task_id: this.task})
+                        .then((r) => {
+                            this.fetchSteps();
+                        }).catch((error) => {
+                        this.$root.fetchError(error);
+                    });
+                }
+            },
+            checkTime() {
+                this.time = 0;
+                let time = this.timeToAdd.trim().split(':');
+                time.forEach(e => this.addTime(e));
+            },
+            addTime(e) {
+                if (e.indexOf('min') > -1) {
+                    this.time += this.removeChr(e);
+                } else if (e.indexOf('h') > -1) {
+                    this.time += this.removeChr(e) * 60;
+                } else if (e.indexOf('d') > -1) {
+                    this.time += this.removeChr(e) * 1440;
+                }
+                this.timeValid = this.time > 0;
+            },
+            removeChr(e) {
+                return parseInt(e.replace(/\D/g, ''));
+            },
+            editStep(step) {
+                this.stepEdit = step;
+                this.edit = true;
+            },
+            saveStep() {
+                axios.patch('/step/' + this.stepEdit.id, {
+                    name: this.stepEdit.name,
+                    time: this.stepEdit.time,
+                    task_id: this.task,
+                });
+                this.edit = false;
+            }, sumTotal() {
+                let total = 0;
+                this.steps.forEach(e => {
+                    if (e.selected) {
+                        total += e.time;
+                    }
+                });
+                this.total = total;
+            }, addToEval() {
+                let steps = this.steps;
+                this.$root.$emit('addEvaluation', steps);
+            }, findStep(e) {
+                if (e.keyCode === 27) {
+                    this.escaped = true;
+                    this.temps = [];
+                } else {
+                    axios.post('/steps/find/', {name: this.stepToAdd}).then(r => {
+                        this.temps = r.data;
+                    }).catch((error) => {
+                        this.$root.fetchError(error);
+                    });
+                }
+            }, selectTemplate(temp) {
+                axios.post('/step/associate/', {step_id: temp.id, task_id: this.$root.$data.task}).then(r => {
+                    console.log(r.data);
+                }).catch((error) => {
+                    this.$root.fetchError(error);
+                });
+                this.steps.push(temp);
+                this.stepToAdd = '';
+                this.temps = [];
+                this.escaped = false;
+            }
+        }
+    }
+</script>
