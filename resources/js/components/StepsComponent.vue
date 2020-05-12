@@ -136,7 +136,7 @@
                 } else if (e.indexOf('h') > -1) {
                     this.time += this.removeChr(e) * 60;
                 } else if (e.indexOf('d') > -1) {
-                    this.time += this.removeChr(e) * 1440;
+                    this.time += this.removeChr(e) * 480;
                 }
                 this.timeValid = this.time > 0;
             },

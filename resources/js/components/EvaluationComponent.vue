@@ -32,17 +32,19 @@
         </span>
 
         <h5 class="m-1">Answer</h5>
-
-        <div class="group-line no-border" v-for="reval in revals">
-            <div>
-                <div class="group-text" v-bind:tesk-id="reval.id">
-                    <input class="eval-txt" type="text" v-model="reval.name">
-                    <input class="eval-time" type="text" v-model="reval.time" @keyup="sumTime">
+        <draggable v-model="revals" draggable=".group-line">
+            <div class="group-line no-border" v-for="reval in revals">
+                <div>
+                    <div class="group-text" v-bind:tesk-id="reval.id">
+                        <input class="eval-txt" type="text" v-model="reval.name">
+                        <input class="eval-time" type="text" v-model="reval.time" @keyup="sumTime">
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" @click="deletePoint(reval)"
+                            v-bind:reval-id="reval.id">x
+                    </button>
                 </div>
-                <button class="btn btn-sm btn-outline-danger" @click="deletePoint(reval)" v-bind:reval-id="reval.id">x
-                </button>
             </div>
-        </div>
+        </draggable>
         <div class="mt-1" v-if="time > 0">
             <div class="time-to-add">Total time: <span class="total-time" v-text="time / 60"></span> h.</div>
             <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false">Save Evaluation
@@ -57,7 +59,11 @@
 </template>
 
 <script>
+    import draggable from 'vuedraggable'
     export default {
+        components: {
+            draggable,
+        },
         data() {
             return {
                 task: 0,
@@ -192,7 +198,20 @@
                 } else {
                     return true;
                 }
+            },
+            onUpdate: function (event) {
+                // this.revals.splice(event.newIndex, 0, this.revals.splice(event.oldIndex, 1)[0])
             }
+        },
+        computed: {
+            // revals: {
+            //     get() {
+            //         return this.$store.state.revals;
+            //     },
+            //     set(value) {
+            //         this.$store.commit('updateList', value);
+            //     }
+            // }
         }
     }
 </script>
