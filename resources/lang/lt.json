@@ -6,7 +6,7 @@
     "Password": "Slaptažodis",
     "Remember Me": "Prisimink mane",
     "Forgot Your Password?": "Pamiršai slaptažodį?",
-    "Vardas": "Имя",
+    "Name": "Vardas",
     "You have successfully logged in!": "Jūs sėkmingai prisijungėte!",
     "Dashboard": "Prietaisų skydelis",
     "Confirm Password": "Patvirtinti slaptažodį",
@@ -20,5 +20,13 @@
     "Save": "Išsaugoti",
     "Title": "Pavadinimas",
     "Update": "Atnaujinti",
-    "Save changes": "Išsaugoti pakeitimus"
+    "Save changes": "Išsaugoti pakeitimus",
+    "Groups": "Grupės",
+    "Steps": "Žingsniai",
+    "Evaluation": "Vertinimas",
+    "Tasks": "Užduotys",
+    "All evaluations": "Visi vertinimai ",
+    "Date": "Data",
+    "Client": "Klientas",
+    "Time": "Laikas"
 }
