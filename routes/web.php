@@ -42,9 +42,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('tasks', 'TaskController@deleteMany');
     Route::post('steps', 'StepController@deleteMany');
 
-    Route::get('test', function (){
-        $event = \App\Evaluation::with('items')->first();
-        $event->time = $event->items->sum('time') / 60;
-        dd($event);
-    });
+    Route::get('dump', 'DumpController@run')->name('dump');
 });

@@ -1,6 +1,6 @@
 <template>
-    <div class="container mt-3">
-        <div class="alert alert-danger" v-if="this.$root.$data.error">
+    <div class="container">
+        <div class="alert alert-danger mt-3" v-if="this.$root.$data.error">
             <button type="button" class="close" data-dismiss="alert" @click="closeAlert">x</button>
             <div v-text="this.$root.$data.errorMessage"></div>
         </div>

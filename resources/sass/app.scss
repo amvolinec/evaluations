@@ -156,3 +156,10 @@ span.bold {
     width: calc(100% - 32px);
 }
 
+#evals .card-header {
+    background-color: #ffe2e2;
+}
+
+#evals.saved .card-header {
+    background-color: #a0efcd;
+}

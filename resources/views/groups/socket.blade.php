@@ -50,12 +50,13 @@
 </div>
 
 <div class="col-md-4">
-    <div class="card">
-        <div class="card-header">{{ __('Evaluation') }}</div>
-        <div class="card-body">
-            <evaluations></evaluations>
-        </div>
-    </div>
+    <evaluations></evaluations>
+    {{--    <div class="card">--}}
+    {{--        <div class="card-header">{{ __('Evaluation') }}</div>--}}
+    {{--        <div class="card-body">--}}
+
+    {{--        </div>--}}
+    {{--    </div>--}}
 </div>
 
 
