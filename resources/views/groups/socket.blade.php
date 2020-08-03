@@ -1,29 +1,6 @@
-<div class="col-md-4">
-    <div class="card">
-        <div class="card-header">{{ __('Evaluation') }}</div>
-        <div class="card-body">
-            <evaluations></evaluations>
-        </div>
-    </div>
-</div>
-
-
 <div class="col-md-8">
 
     <div class="row">
-
-
-        <div class="col-md-6">
-
-            <div class="card">
-                <div class="card-header">{{ __('Steps') }}</div>
-                <div class="card-body">
-                    <steps></steps>
-                </div>
-            </div>
-
-        </div>
-
 
         <div class="col-md-6">
 
@@ -43,6 +20,18 @@
 
         </div>
 
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">{{ __('Steps') }}</div>
+                <div class="card-body">
+                    <steps></steps>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
 
     <div class="row">
@@ -60,5 +49,13 @@
 
 </div>
 
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">{{ __('Evaluation') }}</div>
+        <div class="card-body">
+            <evaluations></evaluations>
+        </div>
+    </div>
+</div>
 
 
