@@ -2008,6 +2008,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2588,7 +2592,7 @@ __webpack_require__.r(__webpack_exports__);
       var total = 0;
       this.steps.forEach(function (e) {
         if (e.selected) {
-          total += e.time;
+          total += parseInt(e.time);
         }
       });
       this.total = total;
@@ -51740,80 +51744,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("h5", { staticClass: "m-1" }, [_vm._v("Inquiry")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "m-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-success",
-                  on: { click: _vm.addOption }
-                },
-                [_c("span", [_vm._v("+")])]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.options, function(option) {
-              return _c("div", { staticClass: "group-line no-border" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: option.name,
-                      expression: "option.name"
-                    }
-                  ],
-                  staticClass: "form-control eval-text",
-                  attrs: {
-                    type: "text",
-                    rows: "5",
-                    oninput:
-                      'this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                  },
-                  domProps: { value: option.name },
-                  on: {
-                    change: _vm.onChanged,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(option, "name", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            }),
-            _vm._v(" "),
-            _vm.time > 0
-              ? _c("span", { staticClass: "span-time" }, [
-                  _c("label", [_vm._v("Time (min): ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.time,
-                        expression: "time"
-                      }
-                    ],
-                    staticClass: "step-time",
-                    attrs: { type: "text", disabled: "" },
-                    domProps: { value: _vm.time },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.time = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("h5", { staticClass: "m-1" }, [_vm._v("Answer")]),
+            _c("h5", { staticClass: "text-center m-1" }, [_vm._v("Answer")]),
             _vm._v(" "),
             _c(
               "draggable",
@@ -51905,16 +51836,98 @@ var render = function() {
             ),
             _vm._v(" "),
             _vm.time > 0
-              ? _c("div", { staticClass: "mt-1" }, [
-                  _c("div", { staticClass: "time-to-add" }, [
-                    _vm._v("Total time: "),
-                    _c("span", {
-                      staticClass: "total-time",
-                      domProps: { textContent: _vm._s(_vm.time / 60) }
-                    }),
-                    _vm._v(" h.")
-                  ]),
+              ? _c("span", { staticClass: "span-time" }, [
+                  _c("label", [_vm._v("Time (min): ")]),
                   _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.time,
+                        expression: "time"
+                      }
+                    ],
+                    staticClass: "step-time",
+                    attrs: { type: "text", disabled: "" },
+                    domProps: { value: _vm.time },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.time = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "time-to-add" }, [
+              _vm._v("Total time: "),
+              _c("span", {
+                staticClass: "total-time",
+                domProps: { textContent: _vm._s(_vm.time / 60) }
+              }),
+              _vm._v(" h.")
+            ]),
+            _vm._v(" "),
+            _vm.message.length > 0
+              ? _c("div", { staticClass: "mt-3" }, [
+                  _c("div", {
+                    staticClass: "alert alert-danger",
+                    domProps: { textContent: _vm._s(_vm.message) }
+                  })
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("h5", { staticClass: "text-center m-1" }, [_vm._v("Inquiry")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "m-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-success",
+                  on: { click: _vm.addOption }
+                },
+                [_c("span", [_vm._v("+")])]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.options, function(option) {
+              return _c("div", { staticClass: "group-line no-border" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: option.name,
+                      expression: "option.name"
+                    }
+                  ],
+                  staticClass: "form-control eval-text",
+                  attrs: {
+                    type: "text",
+                    rows: "5",
+                    oninput:
+                      'this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                  },
+                  domProps: { value: option.name },
+                  on: {
+                    change: _vm.onChanged,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(option, "name", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            }),
+            _vm._v(" "),
+            _vm.time > 0
+              ? _c("div", { staticClass: "mt-1" }, [
                   _vm.edit == false
                     ? _c(
                         "button",
@@ -51945,15 +51958,6 @@ var render = function() {
                     },
                     [_vm._v("Clear")]
                   )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.message.length > 0
-              ? _c("div", { staticClass: "mt-3" }, [
-                  _c("div", {
-                    staticClass: "alert alert-danger",
-                    domProps: { textContent: _vm._s(_vm.message) }
-                  })
                 ])
               : _vm._e()
           ],

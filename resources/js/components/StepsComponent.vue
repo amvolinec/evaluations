@@ -158,7 +158,7 @@
                 let total = 0;
                 this.steps.forEach(e => {
                     if (e.selected) {
-                        total += e.time;
+                        total += parseInt(e.time);
                     }
                 });
                 this.total = total;

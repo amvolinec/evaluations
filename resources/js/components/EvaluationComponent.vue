@@ -21,22 +21,7 @@
                     <input type="hidden" v-model="task">
                 </div>
 
-                <h5 class="m-1">Inquiry</h5>
-
-                <div class="m-2">
-                    <button class="btn btn-sm btn-success" @click="addOption"><span>+</span></button>
-                </div>
-
-                <div class="group-line no-border" v-for="option in options">
-                    <textarea class="form-control eval-text" type="text" v-model="option.name" rows="5" @change="onChanged" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
-                </div>
-
-                <span v-if="time > 0" class="span-time">
-            <label>Time (min): </label>
-            <input class="step-time" type="text" v-model="time" disabled>
-        </span>
-
-                <h5 class="m-1">Answer</h5>
+                <h5 class="text-center m-1">Answer</h5>
                 <draggable v-model="revals" draggable=".group-line">
                     <div class="group-line no-border" v-for="reval in revals">
                         <div>
@@ -50,16 +35,35 @@
                         </div>
                     </div>
                 </draggable>
+
+                <span v-if="time > 0" class="span-time">
+                    <label>Time (min): </label>
+                    <input class="step-time" type="text" v-model="time" disabled>
+                </span>
+
+                <div class="time-to-add">Total time: <span class="total-time" v-text="time / 60"></span> h.</div>
+
+                <div class="mt-3" v-if="message.length > 0">
+                    <div class="alert alert-danger" v-text="message"></div>
+                </div>
+
+                <h5 class="text-center m-1">Inquiry</h5>
+
+                <div class="m-2">
+                    <button class="btn btn-sm btn-success" @click="addOption"><span>+</span></button>
+                </div>
+
+                <div class="group-line no-border" v-for="option in options">
+                    <textarea class="form-control eval-text" type="text" v-model="option.name" rows="5" @change="onChanged" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+                </div>
+
                 <div class="mt-1" v-if="time > 0">
-                    <div class="time-to-add">Total time: <span class="total-time" v-text="time / 60"></span> h.</div>
+
                     <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false">Save Evaluation
                     </button>
                     <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit">Update Evaluation
                     </button>
                     <button class="btn btn-sm btn-success" @click="emptyFields">Clear</button>
-                </div>
-                <div class="mt-3" v-if="message.length > 0">
-                    <div class="alert alert-danger" v-text="message"></div>
                 </div>
             </div>
 
