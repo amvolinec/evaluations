@@ -13,7 +13,7 @@
 
                 <input type="text" v-model="timeToAdd" placeholder="Time: 1d:1h:15min" @keyup="checkTime"
                        @focusout="escaped=false" v-bind:class="{ 'toggle-valid': timeValid }">
-                <button class="btn btn-sm btn-success" @click="addStep"><span>✓</span></button>
+                <button class="btn btn-sm btn-success" @click="addStep"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
             </div>
 
 
@@ -21,7 +21,7 @@
                 <input type="hidden" v-model="stepEdit.id">
                 <input type="text" v-model="stepEdit.name" placeholder="Name">
                 <input type="number" v-model="stepEdit.time" placeholder="Time (min)">
-                <button class="btn btn-sm btn-success" @click="saveStep">Save Step</button>
+                <button class="btn btn-sm btn-success" @click="saveStep"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Step</button>
             </div>
 
             <span v-if="time > 0" class="span-time">
@@ -34,16 +34,18 @@
                          @click="changeStep(step, $event)" v-bind:tesk-id="step.id">{{ step.name }} ({{ step.time }}
                         min.)
                     </div>
-                    <button class="btn btn-sm btn-outline-secondary" @click="editStep(step)" v-bind:step-id="step.id">e
+                    <button class="btn btn-sm btn-outline-secondary" @click="editStep(step)" v-bind:step-id="step.id">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-sm btn-outline-danger" @click="deleteStep(step)" v-bind:step-id="step.id">x
+                    <button class="btn btn-sm btn-outline-danger" @click="deleteStep(step)" v-bind:step-id="step.id">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
 
                 </div>
             </div>
             <div class="mt-1" v-if="total > 0">
-                <div class="time-to-add">Total time: <span class="total-time" v-text="total / 60"></span> h.</div>
-                <button class="btn btn-sm btn-success" @click="addToEval">Add To Evaluation</button>
+                <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span class="total-time" v-text="total / 60"></span> h.</div>
+                <button class="btn btn-sm btn-success" @click="addToEval"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Evaluation</button>
             </div>
         </div>
         <div v-if="task == 0">Select Task first...</div>

@@ -3,12 +3,12 @@
         <div class="form-group">
             <input class="form-control-sm" type="text" v-model="taskToAdd">
             <input type="hidden" v-model="group">
-            <button class="btn btn-sm btn-success" @click="addTask"><span>✓</span></button>
+            <button class="btn btn-sm btn-success" @click="addTask"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
         </div>
         <div class="group-line" v-for="task in tasks">
             <div>
                 <div class="group-text" v-bind:class="{ 'toggle-item': task.selected }" @click="changeTask(task, $event)" v-bind:tesk-id="task.id">{{ task.name }}</div>
-                <button class="btn btn-sm btn-outline-danger" @click="deleteTask(task)" v-bind:task-id="task.id">x</button>
+                <button class="btn btn-sm btn-outline-danger" @click="deleteTask(task)" v-bind:task-id="task.id"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>

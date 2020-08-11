@@ -7,6 +7,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
 @font-face {
     font-family: OptimusPrinceps;
     src: url('/fonts/Courgette-Regular.ttf');
@@ -33,13 +35,13 @@ input, textarea {
 }
 
 .group-text {
-    width: calc(100% - 28px);
+    width: calc(100% - 30px);
     display: inline-block;
     vertical-align: baseline;
     font-size: 12px;
 }
 #steps .group-text {
-    width: calc(100% - 54px);
+    width: calc(100% - 62px);
 }
 
 #list a {
@@ -73,6 +75,8 @@ input, textarea {
 
 .span-time {
     font-size: 0.75rem;
+    width: 100%;
+    text-align: right;
 }
 
 .span-time input {
@@ -110,10 +114,13 @@ input, textarea {
 
 .eval-txt {
     width: calc(100% - 100px);
+    padding: 0 6px;
 }
 
 .eval-time {
     width: 60px;
+    text-align: right;
+    padding: 0 6px;
 }
 
 .eval-btn {
@@ -153,7 +160,7 @@ span.bold {
 }
 
 .form-control-sm {
-    width: calc(100% - 32px);
+    width: calc(100% - 34px);
 }
 
 #evals .card-header {

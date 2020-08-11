@@ -2,11 +2,11 @@
     <div class="list-groups" id="groups">
         <div class="form-group">
             <input class="form-control-sm" type="text" v-model="groupToAdd">
-            <button class="btn btn-sm btn-success" @click="addGroup"><span>✓</span></button>
+            <button class="btn btn-sm btn-success" @click="addGroup"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
         </div>
         <div class="group-line" v-for="group in groups">
             <div class="group-text" v-bind:class="{ 'toggle-item': group.selected }" @click="changeGroup(group, $event)" v-bind:group-id="group.id">{{ group.name }}</div>
-            <button class="btn btn-sm btn-outline-danger" @click="deleteGroup" v-bind:group-id="group.id">x</button>
+            <button class="btn btn-sm btn-outline-danger" @click="deleteGroup" v-bind:group-id="group.id"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
         </div>
     </div>
 </template>

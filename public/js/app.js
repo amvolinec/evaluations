@@ -2468,6 +2468,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -51597,7 +51599,12 @@ var render = function() {
               attrs: { type: "button", "data-dismiss": "alert" },
               on: { click: _vm.closeAlert }
             },
-            [_vm._v("x")]
+            [
+              _c("i", {
+                staticClass: "fa fa-trash-o",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
           ),
           _vm._v(" "),
           _c("div", {
@@ -51827,7 +51834,12 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("x\n                        ")]
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-trash-o",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
                     )
                   ])
                 ])
@@ -51836,8 +51848,8 @@ var render = function() {
             ),
             _vm._v(" "),
             _vm.time > 0
-              ? _c("span", { staticClass: "span-time" }, [
-                  _c("label", [_vm._v("Time (min): ")]),
+              ? _c("div", { staticClass: "span-time" }, [
+                  _c("label", [_vm._v(" Time (min): ")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -51864,7 +51876,11 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "time-to-add" }, [
-              _vm._v("Total time: "),
+              _c("i", {
+                staticClass: "fa fa-calculator",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" Total time: "),
               _c("span", {
                 staticClass: "total-time",
                 domProps: { textContent: _vm._s(_vm.time / 60) }
@@ -51890,7 +51906,12 @@ var render = function() {
                   staticClass: "btn btn-sm btn-success",
                   on: { click: _vm.addOption }
                 },
-                [_c("span", [_vm._v("+")])]
+                [
+                  _c("i", {
+                    staticClass: "fa fa-plus",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
               )
             ]),
             _vm._v(" "),
@@ -51935,7 +51956,13 @@ var render = function() {
                           staticClass: "btn btn-sm btn-success",
                           on: { click: _vm.storeEvaluation }
                         },
-                        [_vm._v("Save Evaluation\n                ")]
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-floppy-o",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(" Save Evaluation\n                ")
+                        ]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -51946,7 +51973,13 @@ var render = function() {
                           staticClass: "btn btn-sm btn-success",
                           on: { click: _vm.updateEvaluation }
                         },
-                        [_vm._v("Update Evaluation\n                ")]
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-cloud-upload",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(" Update Evaluation\n                ")
+                        ]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -51956,7 +51989,13 @@ var render = function() {
                       staticClass: "btn btn-sm btn-success",
                       on: { click: _vm.emptyFields }
                     },
-                    [_vm._v("Clear")]
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-eraser",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _vm._v(" Clear")
+                    ]
                   )
                 ])
               : _vm._e()
@@ -52022,7 +52061,12 @@ var render = function() {
             staticClass: "btn btn-sm btn-success",
             on: { click: _vm.addGroup }
           },
-          [_c("span", [_vm._v("✓")])]
+          [
+            _c("i", {
+              staticClass: "fa fa-floppy-o",
+              attrs: { "aria-hidden": "true" }
+            })
+          ]
         )
       ]),
       _vm._v(" "),
@@ -52050,7 +52094,12 @@ var render = function() {
               attrs: { "group-id": group.id },
               on: { click: _vm.deleteGroup }
             },
-            [_vm._v("x")]
+            [
+              _c("i", {
+                staticClass: "fa fa-trash-o",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
           )
         ])
       })
@@ -52109,7 +52158,12 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Load")]
+                [
+                  _c("i", {
+                    staticClass: "fa fa-pencil-square-o",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
               ),
               _vm._v(" "),
               _c(
@@ -52118,7 +52172,12 @@ var render = function() {
                   staticClass: "btn btn-sm btn-outline-dark",
                   attrs: { href: _vm.getUri(item), target: "_blank" }
                 },
-                [_vm._v("View")]
+                [
+                  _c("i", {
+                    staticClass: "fa fa-eye",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
               ),
               _vm._v(" "),
               _c(
@@ -52131,7 +52190,12 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Export")]
+                [
+                  _c("i", {
+                    staticClass: "fa fa-file-word-o",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
               ),
               _vm._v(" "),
               _c(
@@ -52144,7 +52208,12 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Delete")]
+                [
+                  _c("i", {
+                    staticClass: "fa fa-trash-o",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
               )
             ])
           ])
@@ -52161,7 +52230,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _c("th", { attrs: { scope: "col", width: "10%" } }, [_vm._v("#")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
@@ -52169,9 +52238,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Client")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Time")]),
+        _c("th", { attrs: { scope: "col", width: "10%" } }, [_vm._v("Time")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")])
+        _c("th", { attrs: { scope: "col", width: "15%" } }, [_vm._v("Actions")])
       ])
     ])
   }
@@ -52300,7 +52369,12 @@ var render = function() {
                       staticClass: "btn btn-sm btn-success",
                       on: { click: _vm.addStep }
                     },
-                    [_c("span", [_vm._v("✓")])]
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-floppy-o",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
                   )
                 ])
               : _vm._e(),
@@ -52376,7 +52450,13 @@ var render = function() {
                       staticClass: "btn btn-sm btn-success",
                       on: { click: _vm.saveStep }
                     },
-                    [_vm._v("Save Step")]
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-floppy-o",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _vm._v(" Save Step")
+                    ]
                   )
                 ])
               : _vm._e(),
@@ -52445,7 +52525,12 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("e\n                ")]
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-pencil",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -52459,7 +52544,12 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("x\n                ")]
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-trash-o",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
                   )
                 ])
               ])
@@ -52468,7 +52558,11 @@ var render = function() {
             _vm.total > 0
               ? _c("div", { staticClass: "mt-1" }, [
                   _c("div", { staticClass: "time-to-add" }, [
-                    _vm._v("Total time: "),
+                    _c("i", {
+                      staticClass: "fa fa-calculator",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(" Total time: "),
                     _c("span", {
                       staticClass: "total-time",
                       domProps: { textContent: _vm._s(_vm.total / 60) }
@@ -52482,7 +52576,13 @@ var render = function() {
                       staticClass: "btn btn-sm btn-success",
                       on: { click: _vm.addToEval }
                     },
-                    [_vm._v("Add To Evaluation")]
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-cart-plus",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _vm._v(" Add To Evaluation")
+                    ]
                   )
                 ])
               : _vm._e()
@@ -52567,7 +52667,12 @@ var render = function() {
         _c(
           "button",
           { staticClass: "btn btn-sm btn-success", on: { click: _vm.addTask } },
-          [_c("span", [_vm._v("✓")])]
+          [
+            _c("i", {
+              staticClass: "fa fa-floppy-o",
+              attrs: { "aria-hidden": "true" }
+            })
+          ]
         )
       ]),
       _vm._v(" "),
@@ -52600,7 +52705,12 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("x")]
+              [
+                _c("i", {
+                  staticClass: "fa fa-trash-o",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
             )
           ])
         ])

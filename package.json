@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "font-awesome": "^4.7.0",
         "laravel-echo": "^1.7.0",
         "pusher-js": "^5.1.1",
         "vuedraggable": "^2.23.2"

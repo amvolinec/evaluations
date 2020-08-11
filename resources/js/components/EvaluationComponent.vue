@@ -30,18 +30,18 @@
                                 <input class="eval-time" type="text" v-model="reval.time" @keyup="sumTime">
                             </div>
                             <button class="btn btn-sm btn-outline-danger" @click="deletePoint(reval)"
-                                    v-bind:reval-id="reval.id">x
+                                    v-bind:reval-id="reval.id"><i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
                 </draggable>
 
-                <span v-if="time > 0" class="span-time">
-                    <label>Time (min): </label>
+                <div v-if="time > 0" class="span-time">
+                    <label> Time (min): </label>
                     <input class="step-time" type="text" v-model="time" disabled>
-                </span>
+                </div>
 
-                <div class="time-to-add">Total time: <span class="total-time" v-text="time / 60"></span> h.</div>
+                <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span class="total-time" v-text="time / 60"></span> h.</div>
 
                 <div class="mt-3" v-if="message.length > 0">
                     <div class="alert alert-danger" v-text="message"></div>
@@ -50,7 +50,7 @@
                 <h5 class="text-center m-1">Inquiry</h5>
 
                 <div class="m-2">
-                    <button class="btn btn-sm btn-success" @click="addOption"><span>+</span></button>
+                    <button class="btn btn-sm btn-success" @click="addOption"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 </div>
 
                 <div class="group-line no-border" v-for="option in options">
@@ -59,11 +59,11 @@
 
                 <div class="mt-1" v-if="time > 0">
 
-                    <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false">Save Evaluation
+                    <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Evaluation
                     </button>
-                    <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit">Update Evaluation
+                    <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Update Evaluation
                     </button>
-                    <button class="btn btn-sm btn-success" @click="emptyFields">Clear</button>
+                    <button class="btn btn-sm btn-success" @click="emptyFields"><i class="fa fa-eraser" aria-hidden="true"></i> Clear</button>
                 </div>
             </div>
 

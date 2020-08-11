@@ -3,12 +3,12 @@
         <table class="table table-sm table-striped">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" width="10%">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
                 <th scope="col">Client</th>
-                <th scope="col">Time</th>
-                <th scope="col">Actions</th>
+                <th scope="col" width="10%">Time</th>
+                <th scope="col" width="15%">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -19,10 +19,10 @@
                 <td>{{ item.client}}</td>
                 <td>{{ sumTimes(item.items)}} val.</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-secondary" @click="itemLoad(item)">Load</button>
-                    <a class="btn btn-sm btn-outline-dark" :href="getUri(item)" target="_blank">View</a>
-                    <button class="btn btn-sm btn-outline-success" @click="itemExport(item)">Export</button>
-                    <button class="btn btn-sm btn-outline-danger" @click="itemDelete(item)">Delete</button>
+                    <button class="btn btn-sm btn-outline-secondary" @click="itemLoad(item)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <a class="btn btn-sm btn-outline-dark" :href="getUri(item)" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <button class="btn btn-sm btn-outline-success" @click="itemExport(item)"><i class="fa fa-file-word-o" aria-hidden="true"></i></button>
+                    <button class="btn btn-sm btn-outline-danger" @click="itemDelete(item)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                 </td>
             </tr>
             </tbody>
