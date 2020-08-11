@@ -57,8 +57,7 @@
                     <textarea class="form-control eval-text" type="text" v-model="option.name" rows="5" @change="onChanged" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
                 </div>
 
-                <div class="mt-1" v-if="time > 0">
-
+                <div class="mt-3" v-if="time > 0">
                     <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Evaluation
                     </button>
                     <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Update Evaluation

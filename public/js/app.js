@@ -2011,7 +2011,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -51948,7 +51947,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _vm.time > 0
-              ? _c("div", { staticClass: "mt-1" }, [
+              ? _c("div", { staticClass: "mt-3" }, [
                   _vm.edit == false
                     ? _c(
                         "button",
