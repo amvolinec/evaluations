@@ -8,15 +8,25 @@ class DumpController extends Controller
 {
     protected function run()
     {
-        $cmd = sprintf("mysqldump -u %s -p%s %s -R --triggers --events > %s",
-            env('DB_USERNAME'),
-            env('DB_PASSWORD'),
-            env('DB_DATABASE'),
-            env('DB_DUMP_PATH')
-        );
-        $result = shell_exec($cmd);
+        if(empty(env('DB_PASSWORD'))){
+            $cmd = sprintf("mysqldump -u %s -p%s %s -R --triggers --events > %s",
+                env('DB_USERNAME'),
+                env('DB_PASSWORD'),
+                env('DB_DATABASE'),
+                env('DB_DUMP_PATH')
+            );
+        } else {
+            $cmd = sprintf("mysqldump -u %s %s -R --triggers --events > %s",
+                env('DB_USERNAME'),
+                env('DB_DATABASE'),
+                env('DB_DUMP_PATH')
+            );
+        }
 
-        $result = $cmd . PHP_EOL . json_encode($result, JSON_PRETTY_PRINT);
+        shell_exec($cmd);
+        shell_exec("\n");
+
+        $result = $cmd;
 
         return view('dump', compact('result'));
     }
