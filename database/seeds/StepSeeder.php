@@ -24,7 +24,7 @@ class StepSeeder extends Seeder
             ['name' => 'Modelio kūrimas', 'group_id' => 2],
             ['name' => 'Modelio redagavimas', 'group_id' => 3],
             ['name' => 'Testavimas', 'group_id' => 4],
-            ['name' => 'Testavimo ataskaitos kūriams', 'group_id' => 4],
+            ['name' => 'Testavimo ataskaitos kūrimas', 'group_id' => 4],
             ['name' => 'Testas', 'group_id' => 4],
         ];
         DB::table('steps')->insert($steps);
