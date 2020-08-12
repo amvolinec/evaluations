@@ -4,65 +4,83 @@
         <div class="card-header">Evaluation</div>
         <div class="card-body">
 
-            <div class="list-steps" id="evaluations">
-                <div class="">
-                    <div class="flex-xl-fill mb-3">
-                        <div class="p-2 bd-highlight">
-                            <input class="form-control-sm" type="text" v-model="evalName" placeholder="Name" @change="onChanged">
-                        </div>
-                        <div class="p-2 bd-highlight">
-                            <input class="form-control-sm" type="text" v-model="evalDate" placeholder="Date" @change="onChanged">
-                        </div>
-                        <div class="p-2 bd-highlight">
-                            <input class="form-control-sm" type="text" v-model="evalClient" placeholder="Client" @change="onChanged">
-                        </div>
-                    </div>
-
-                    <input type="hidden" v-model="task">
-                </div>
-
-                <h5 class="text-center m-1">Answer</h5>
-                <draggable v-model="revals" draggable=".group-line">
-                    <div class="group-line no-border" v-for="reval in revals">
-                        <div>
-                            <div class="group-text" v-bind:tesk-id="reval.id">
-                                <input class="eval-txt" type="text" v-model="reval.name" @change="onChanged">
-                                <input class="eval-time" type="text" v-model="reval.time" @keyup="sumTime">
+            <div class="list-steps row" id="evaluations">
+                <div class="col-md-6">
+                    <div class="">
+                        <div class="flex-xl-fill mb-3">
+                            <div class="p-1 bd-highlight">
+                                <input class="form-control-sm" type="text" v-model="evalName" placeholder="Name"
+                                       @change="onChanged">
                             </div>
-                            <button class="btn btn-sm btn-outline-danger" @click="deletePoint(reval)"
-                                    v-bind:reval-id="reval.id"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                            </button>
+                            <div class="p-1 bd-highlight">
+                                <input class="form-control-sm" type="text" v-model="evalDate" placeholder="Date"
+                                       @change="onChanged">
+                            </div>
+                            <div class="p-1 bd-highlight">
+                                <input class="form-control-sm" type="text" v-model="evalClient" placeholder="Client"
+                                       @change="onChanged">
+                            </div>
                         </div>
+
+                        <input type="hidden" v-model="task">
                     </div>
-                </draggable>
 
-                <div v-if="time > 0" class="span-time">
-                    <label> Time (min): </label>
-                    <input class="step-time" type="text" v-model="time" disabled>
+                    <h5 class="text-center m-1">Answer</h5>
+                    <draggable v-model="revals" draggable=".group-line">
+                        <div class="group-line no-border" v-for="reval in revals">
+                            <div>
+                                <div class="group-text" v-bind:tesk-id="reval.id">
+                                    <input class="eval-txt" type="text" v-model="reval.name" @change="onChanged">
+                                    <input class="eval-time" type="text" v-model="reval.time" @keyup="sumTime">
+                                </div>
+                                <button class="btn btn-sm btn-outline-danger" @click="deletePoint(reval)"
+                                        v-bind:reval-id="reval.id"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </draggable>
+
+                    <div v-if="time > 0" class="span-time">
+                        <label> Time (min): </label>
+                        <input class="step-time" type="text" v-model="time" disabled>
+                    </div>
+
+                    <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span
+                        class="total-time" v-text="time / 60"></span> h.
+                    </div>
+
+                    <div class="mt-3" v-if="message.length > 0">
+                        <div class="alert alert-danger" v-text="message"></div>
+                    </div>
+
                 </div>
 
-                <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span class="total-time" v-text="time / 60"></span> h.</div>
+                <div class="col-md-6">
+                    <h5 class="text-center m-1">Inquiry</h5>
 
-                <div class="mt-3" v-if="message.length > 0">
-                    <div class="alert alert-danger" v-text="message"></div>
-                </div>
+                    <div class="m-2">
+                        <button class="btn btn-sm btn-success" @click="addOption"><i class="fa fa-plus"
+                                                                                     aria-hidden="true"></i></button>
+                    </div>
 
-                <h5 class="text-center m-1">Inquiry</h5>
+                    <div class="group-line no-border" v-for="option in options">
+                        <textarea class="form-control eval-text" type="text" v-model="option.name" rows="5"
+                                  @change="onChanged"
+                                  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+                    </div>
 
-                <div class="m-2">
-                    <button class="btn btn-sm btn-success" @click="addOption"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                </div>
+                    <div class="mt-3" v-if="time > 0">
+                        <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false"><i
+                            class="fa fa-floppy-o" aria-hidden="true"></i> Save Evaluation
+                        </button>
+                        <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit"><i
+                            class="fa fa-cloud-upload" aria-hidden="true"></i> Update Evaluation
+                        </button>
+                        <button class="btn btn-sm btn-success" @click="emptyFields"><i class="fa fa-eraser"
+                                                                                       aria-hidden="true"></i> Clear
+                        </button>
+                    </div>
 
-                <div class="group-line no-border" v-for="option in options">
-                    <textarea class="form-control eval-text" type="text" v-model="option.name" rows="5" @change="onChanged" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
-                </div>
-
-                <div class="mt-3" v-if="time > 0">
-                    <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Evaluation
-                    </button>
-                    <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Update Evaluation
-                    </button>
-                    <button class="btn btn-sm btn-success" @click="emptyFields"><i class="fa fa-eraser" aria-hidden="true"></i> Clear</button>
                 </div>
             </div>
 

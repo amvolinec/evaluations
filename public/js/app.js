@@ -2011,6 +2011,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -51648,358 +51666,375 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _c(
           "div",
-          { staticClass: "list-steps", attrs: { id: "evaluations" } },
+          { staticClass: "list-steps row", attrs: { id: "evaluations" } },
           [
-            _c("div", {}, [
-              _c("div", { staticClass: "flex-xl-fill mb-3" }, [
-                _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.evalName,
-                        expression: "evalName"
-                      }
-                    ],
-                    staticClass: "form-control-sm",
-                    attrs: { type: "text", placeholder: "Name" },
-                    domProps: { value: _vm.evalName },
-                    on: {
-                      change: _vm.onChanged,
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.evalName = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.evalDate,
-                        expression: "evalDate"
-                      }
-                    ],
-                    staticClass: "form-control-sm",
-                    attrs: { type: "text", placeholder: "Date" },
-                    domProps: { value: _vm.evalDate },
-                    on: {
-                      change: _vm.onChanged,
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.evalDate = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.evalClient,
-                        expression: "evalClient"
-                      }
-                    ],
-                    staticClass: "form-control-sm",
-                    attrs: { type: "text", placeholder: "Client" },
-                    domProps: { value: _vm.evalClient },
-                    on: {
-                      change: _vm.onChanged,
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.evalClient = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.task,
-                    expression: "task"
-                  }
-                ],
-                attrs: { type: "hidden" },
-                domProps: { value: _vm.task },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.task = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("h5", { staticClass: "text-center m-1" }, [_vm._v("Answer")]),
-            _vm._v(" "),
             _c(
-              "draggable",
-              {
-                attrs: { draggable: ".group-line" },
-                model: {
-                  value: _vm.revals,
-                  callback: function($$v) {
-                    _vm.revals = $$v
-                  },
-                  expression: "revals"
-                }
-              },
-              _vm._l(_vm.revals, function(reval) {
-                return _c("div", { staticClass: "group-line no-border" }, [
-                  _c("div", [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "group-text",
-                        attrs: { "tesk-id": reval.id }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: reval.name,
-                              expression: "reval.name"
-                            }
-                          ],
-                          staticClass: "eval-txt",
-                          attrs: { type: "text" },
-                          domProps: { value: reval.name },
-                          on: {
-                            change: _vm.onChanged,
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(reval, "name", $event.target.value)
-                            }
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c("div", {}, [
+                  _c("div", { staticClass: "flex-xl-fill mb-3" }, [
+                    _c("div", { staticClass: "p-1 bd-highlight" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.evalName,
+                            expression: "evalName"
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: reval.time,
-                              expression: "reval.time"
-                            }
-                          ],
-                          staticClass: "eval-time",
-                          attrs: { type: "text" },
-                          domProps: { value: reval.time },
-                          on: {
-                            keyup: _vm.sumTime,
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(reval, "time", $event.target.value)
-                            }
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-outline-danger",
-                        attrs: { "reval-id": reval.id },
+                        ],
+                        staticClass: "form-control-sm",
+                        attrs: { type: "text", placeholder: "Name" },
+                        domProps: { value: _vm.evalName },
                         on: {
-                          click: function($event) {
-                            return _vm.deletePoint(reval)
+                          change: _vm.onChanged,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.evalName = $event.target.value
                           }
                         }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "p-1 bd-highlight" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.evalDate,
+                            expression: "evalDate"
+                          }
+                        ],
+                        staticClass: "form-control-sm",
+                        attrs: { type: "text", placeholder: "Date" },
+                        domProps: { value: _vm.evalDate },
+                        on: {
+                          change: _vm.onChanged,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.evalDate = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "p-1 bd-highlight" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.evalClient,
+                            expression: "evalClient"
+                          }
+                        ],
+                        staticClass: "form-control-sm",
+                        attrs: { type: "text", placeholder: "Client" },
+                        domProps: { value: _vm.evalClient },
+                        on: {
+                          change: _vm.onChanged,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.evalClient = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.task,
+                        expression: "task"
+                      }
+                    ],
+                    attrs: { type: "hidden" },
+                    domProps: { value: _vm.task },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.task = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("h5", { staticClass: "text-center m-1" }, [
+                  _vm._v("Answer")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "draggable",
+                  {
+                    attrs: { draggable: ".group-line" },
+                    model: {
+                      value: _vm.revals,
+                      callback: function($$v) {
+                        _vm.revals = $$v
                       },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-trash-o",
-                          attrs: { "aria-hidden": "true" }
-                        })
-                      ]
-                    )
-                  ])
-                ])
-              }),
-              0
+                      expression: "revals"
+                    }
+                  },
+                  _vm._l(_vm.revals, function(reval) {
+                    return _c("div", { staticClass: "group-line no-border" }, [
+                      _c("div", [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "group-text",
+                            attrs: { "tesk-id": reval.id }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: reval.name,
+                                  expression: "reval.name"
+                                }
+                              ],
+                              staticClass: "eval-txt",
+                              attrs: { type: "text" },
+                              domProps: { value: reval.name },
+                              on: {
+                                change: _vm.onChanged,
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(reval, "name", $event.target.value)
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: reval.time,
+                                  expression: "reval.time"
+                                }
+                              ],
+                              staticClass: "eval-time",
+                              attrs: { type: "text" },
+                              domProps: { value: reval.time },
+                              on: {
+                                keyup: _vm.sumTime,
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(reval, "time", $event.target.value)
+                                }
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-outline-danger",
+                            attrs: { "reval-id": reval.id },
+                            on: {
+                              click: function($event) {
+                                return _vm.deletePoint(reval)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-trash-o",
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          ]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _vm.time > 0
+                  ? _c("div", { staticClass: "span-time" }, [
+                      _c("label", [_vm._v(" Time (min): ")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.time,
+                            expression: "time"
+                          }
+                        ],
+                        staticClass: "step-time",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.time },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.time = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "time-to-add" }, [
+                  _c("i", {
+                    staticClass: "fa fa-calculator",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" Total time: "),
+                  _c("span", {
+                    staticClass: "total-time",
+                    domProps: { textContent: _vm._s(_vm.time / 60) }
+                  }),
+                  _vm._v(" h.\n                ")
+                ]),
+                _vm._v(" "),
+                _vm.message.length > 0
+                  ? _c("div", { staticClass: "mt-3" }, [
+                      _c("div", {
+                        staticClass: "alert alert-danger",
+                        domProps: { textContent: _vm._s(_vm.message) }
+                      })
+                    ])
+                  : _vm._e()
+              ],
+              1
             ),
             _vm._v(" "),
-            _vm.time > 0
-              ? _c("div", { staticClass: "span-time" }, [
-                  _c("label", [_vm._v(" Time (min): ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.time,
-                        expression: "time"
-                      }
-                    ],
-                    staticClass: "step-time",
-                    attrs: { type: "text", disabled: "" },
-                    domProps: { value: _vm.time },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.time = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "time-to-add" }, [
-              _c("i", {
-                staticClass: "fa fa-calculator",
-                attrs: { "aria-hidden": "true" }
-              }),
-              _vm._v(" Total time: "),
-              _c("span", {
-                staticClass: "total-time",
-                domProps: { textContent: _vm._s(_vm.time / 60) }
-              }),
-              _vm._v(" h.")
-            ]),
-            _vm._v(" "),
-            _vm.message.length > 0
-              ? _c("div", { staticClass: "mt-3" }, [
-                  _c("div", {
-                    staticClass: "alert alert-danger",
-                    domProps: { textContent: _vm._s(_vm.message) }
-                  })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("h5", { staticClass: "text-center m-1" }, [_vm._v("Inquiry")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "m-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-success",
-                  on: { click: _vm.addOption }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fa-plus",
-                    attrs: { "aria-hidden": "true" }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.options, function(option) {
-              return _c("div", { staticClass: "group-line no-border" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: option.name,
-                      expression: "option.name"
-                    }
-                  ],
-                  staticClass: "form-control eval-text",
-                  attrs: {
-                    type: "text",
-                    rows: "5",
-                    oninput:
-                      'this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                  },
-                  domProps: { value: option.name },
-                  on: {
-                    change: _vm.onChanged,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(option, "name", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            }),
-            _vm._v(" "),
-            _vm.time > 0
-              ? _c("div", { staticClass: "mt-3" }, [
-                  _vm.edit == false
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-success",
-                          on: { click: _vm.storeEvaluation }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "fa fa-floppy-o",
-                            attrs: { "aria-hidden": "true" }
-                          }),
-                          _vm._v(" Save Evaluation\n                ")
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.edit
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-success",
-                          on: { click: _vm.updateEvaluation }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "fa fa-cloud-upload",
-                            attrs: { "aria-hidden": "true" }
-                          }),
-                          _vm._v(" Update Evaluation\n                ")
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c("h5", { staticClass: "text-center m-1" }, [
+                  _vm._v("Inquiry")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "m-2" }, [
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-sm btn-success",
-                      on: { click: _vm.emptyFields }
+                      on: { click: _vm.addOption }
                     },
                     [
                       _c("i", {
-                        staticClass: "fa fa-eraser",
+                        staticClass: "fa fa-plus",
                         attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" Clear")
+                      })
                     ]
                   )
-                ])
-              : _vm._e()
-          ],
-          2
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.options, function(option) {
+                  return _c("div", { staticClass: "group-line no-border" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: option.name,
+                          expression: "option.name"
+                        }
+                      ],
+                      staticClass: "form-control eval-text",
+                      attrs: {
+                        type: "text",
+                        rows: "5",
+                        oninput:
+                          'this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                      },
+                      domProps: { value: option.name },
+                      on: {
+                        change: _vm.onChanged,
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(option, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                _vm._v(" "),
+                _vm.time > 0
+                  ? _c("div", { staticClass: "mt-3" }, [
+                      _vm.edit == false
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-success",
+                              on: { click: _vm.storeEvaluation }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-floppy-o",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v(" Save Evaluation\n                    ")
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.edit
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-success",
+                              on: { click: _vm.updateEvaluation }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-cloud-upload",
+                                attrs: { "aria-hidden": "true" }
+                              }),
+                              _vm._v(" Update Evaluation\n                    ")
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-success",
+                          on: { click: _vm.emptyFields }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-eraser",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(" Clear\n                    ")
+                        ]
+                      )
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          ]
         )
       ])
     ]
@@ -52239,7 +52274,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col", width: "10%" } }, [_vm._v("Time")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col", width: "15%" } }, [_vm._v("Actions")])
+        _c("th", { attrs: { scope: "col", width: "20%" } }, [_vm._v("Actions")])
       ])
     ])
   }

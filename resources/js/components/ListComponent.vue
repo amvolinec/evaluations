@@ -8,7 +8,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">Client</th>
                 <th scope="col" width="10%">Time</th>
-                <th scope="col" width="15%">Actions</th>
+                <th scope="col" width="20%">Actions</th>
             </tr>
             </thead>
             <tbody>
