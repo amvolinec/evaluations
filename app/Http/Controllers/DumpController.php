@@ -13,13 +13,13 @@ class DumpController extends Controller
                 env('DB_USERNAME'),
                 env('DB_PASSWORD'),
                 env('DB_DATABASE'),
-                env('DB_DUMP_PATH')
+                env('DB_DUMP_PATH') . '/evaluations_' . date('Ymd_His') . '.sql'
             );
         } else {
             $cmd = sprintf("mysqldump -u %s -R --skip-triggers --no-create-info --no-create-db %s > %s \n",
                 env('DB_USERNAME'),
                 env('DB_DATABASE'),
-                env('DB_DUMP_PATH')
+                env('DB_DUMP_PATH') . '/evaluations_' . date('Ymd_His') . '.sql'
             );
         }
 
