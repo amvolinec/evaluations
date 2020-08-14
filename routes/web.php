@@ -43,4 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::post('steps', 'StepController@deleteMany');
 
     Route::get('dump', 'DumpController@run')->name('dump');
+    Route::get('users', 'UserController@get')->name('users.get');
+    Route::post('users', 'UserController@set')->name('users.set');
 });
