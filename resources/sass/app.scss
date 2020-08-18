@@ -1,5 +1,6 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
 
 // Variables
 @import 'variables';
@@ -20,7 +21,7 @@ h1, h2, h3, h4, h5 {
 }
 
 input, textarea {
-    font-size: 12px !important;
+    font-size: 14px !important;
     padding: 2px;
     border-radius: 2px;
     border: 1px solid #e9ecefa6;
@@ -38,7 +39,7 @@ input, textarea {
     width: calc(100% - 30px);
     display: inline-block;
     vertical-align: baseline;
-    font-size: 12px;
+    font-size: 14px;
 }
 #steps .group-text {
     width: calc(100% - 62px);
@@ -96,7 +97,7 @@ input, textarea {
 }
 
 .time-to-add {
-    font-size: 12px;
+    font-size: 14px;
     margin: 8px;
     color: #2d995b;
     font-weight: 800;
@@ -107,7 +108,7 @@ input, textarea {
 
 .eval-text {
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 4px;
     border: 1px solid #e9ecef;
 }
@@ -128,7 +129,7 @@ input, textarea {
 }
 
 .table.table-sm {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .inline {
@@ -151,7 +152,7 @@ input, textarea {
 }
 
 .down-item {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 span.bold {
