@@ -109,7 +109,7 @@ class EvaluationController extends Controller
 
     public function get()
     {
-        return Evaluation::with(['items'])->orderBy('name')->get();
+        return Evaluation::with(['items'])->orderBy('created_at', 'desc')->get();
     }
 
     public function getOne(Request $request)

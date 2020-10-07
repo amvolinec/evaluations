@@ -2584,10 +2584,10 @@ __webpack_require__.r(__webpack_exports__);
     addTime: function addTime(e) {
       if (e.indexOf('min') > -1) {
         this.time += this.removeChr(e) / 60;
-      } else if (e.indexOf('h') > -1) {
-        this.time += this.removeChr(e);
       } else if (e.indexOf('d') > -1) {
         this.time += this.removeChr(e) * 8;
+      } else {
+        this.time += this.removeChr(e);
       }
 
       this.timeValid = this.time > 0;
@@ -52471,7 +52471,7 @@ var render = function() {
                       }
                     ],
                     class: { "toggle-valid": _vm.timeValid },
-                    attrs: { type: "text", placeholder: "Time: 1d:1h:15min" },
+                    attrs: { type: "text", placeholder: "Time: 1d:1h" },
                     domProps: { value: _vm.timeToAdd },
                     on: {
                       keyup: _vm.checkTime,

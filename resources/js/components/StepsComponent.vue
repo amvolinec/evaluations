@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <input type="text" v-model="timeToAdd" placeholder="Time: 1d:1h:15min" @keyup="checkTime"
+                <input type="text" v-model="timeToAdd" placeholder="Time: 1d:1h" @keyup="checkTime"
                        @focusout="escaped=false" v-bind:class="{ 'toggle-valid': timeValid }">
                 <button class="btn btn-sm btn-success" @click="addStep"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
             </div>
@@ -135,10 +135,10 @@
             addTime(e) {
                 if (e.indexOf('min') > -1) {
                     this.time += this.removeChr(e) / 60;
-                } else if (e.indexOf('h') > -1) {
-                    this.time += this.removeChr(e);
                 } else if (e.indexOf('d') > -1) {
                     this.time += this.removeChr(e) * 8;
+                } else {
+                    this.time += this.removeChr(e);
                 }
                 this.timeValid = this.time > 0;
             },

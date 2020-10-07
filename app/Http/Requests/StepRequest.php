@@ -25,7 +25,7 @@ class StepRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:steps|max:191|min:4',
-            'time' => 'required|integer|max:3600|min:10',
+            'time' => 'required|integer|max:80|min:1',
         ];
     }
 }
