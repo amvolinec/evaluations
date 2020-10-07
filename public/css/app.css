@@ -14096,3 +14096,7 @@ span.bold {
   color: #666666 !important;
 }
 
+.card-body {
+  padding: 4px;
+}
+

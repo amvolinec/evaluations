@@ -6,7 +6,7 @@
                     <input class="form-control-sm" type="text" v-model="stepToAdd" placeholder="Name" @keyup="findStep($event)">
                     <div class="drop-box" v-if="temps.length > 0 && !escaped">
                         <div class="group-line down-item" v-for="temp in temps" @click="selectTemplate(temp)"
-                             v-bind:temp-id="temp.id">{{ temp.name }} ({{ temp.time }} min.)
+                             v-bind:temp-id="temp.id">{{ temp.name }} ({{ temp.time }} val.)
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div>
                     <div class="group-text" v-bind:class="{ 'toggle-item': step.selected }"
                          @click="changeStep(step, $event)" v-bind:tesk-id="step.id">{{ step.name }} ({{ step.time }}
-                        min.)
+                        val.)
                     </div>
                     <button class="btn btn-sm btn-outline-secondary" @click="editStep(step)" v-bind:step-id="step.id">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="mt-1" v-if="total > 0">
-                <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span class="total-time" v-text="total / 60"></span> h.</div>
+                <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span class="total-time" v-text="total"></span> h.</div>
                 <button class="btn btn-sm btn-success" @click="addToEval"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Evaluation</button>
             </div>
         </div>
@@ -134,11 +134,11 @@
             },
             addTime(e) {
                 if (e.indexOf('min') > -1) {
-                    this.time += this.removeChr(e);
+                    this.time += this.removeChr(e) / 60;
                 } else if (e.indexOf('h') > -1) {
-                    this.time += this.removeChr(e) * 60;
+                    this.time += this.removeChr(e);
                 } else if (e.indexOf('d') > -1) {
-                    this.time += this.removeChr(e) * 480;
+                    this.time += this.removeChr(e) * 8;
                 }
                 this.timeValid = this.time > 0;
             },

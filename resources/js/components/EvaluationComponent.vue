@@ -40,13 +40,13 @@
                         </div>
                     </draggable>
 
-                    <div v-if="time > 0" class="span-time">
-                        <label> Time (min): </label>
-                        <input class="step-time" type="text" v-model="time" disabled>
-                    </div>
+<!--                    <div v-if="time > 0" class="span-time">-->
+<!--                        <label> Time (min): </label>-->
+<!--                        <input class="step-time" type="text" v-model="time" disabled>-->
+<!--                    </div>-->
 
                     <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span
-                        class="total-time" v-text="time / 60"></span> h.
+                        class="total-time" v-text="time"></span> h.
                     </div>
 
                     <div class="mt-3" v-if="message.length > 0">

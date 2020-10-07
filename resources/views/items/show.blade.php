@@ -33,23 +33,23 @@
                     <h5>Evaluations:</h5>
                     <ol>
                         @foreach($items as $item)
-                                <li>{{ $item->name }} {{ $item->time / 60}} val.</li>
+                                <li>{{ $item->name }} {{ $item->time}} val.</li>
                         @endforeach
                     </ol>
 
                     <ul>
 {{--                        <li>Analizė – {{ $analise / 60 }} val.</li>--}}
                         @foreach($analise_items as $item)
-                            <li>{{ $item->name }} {{ $item->time / 60}} val.</li>
+                            <li>{{ $item->name }} {{ $item->time}} val.</li>
                         @endforeach
-                        <li>Programavimas – {{ $items->total / 60 }} val.</li>
+                        <li>Programavimas – {{ $items->total}} val.</li>
                         @foreach($test_items as $item)
-                            <li>{{ $item->name }} {{ $item->time / 60}} val.</li>
+                            <li>{{ $item->name }} {{ $item->time}} val.</li>
                         @endforeach
 {{--                        <li>Testavimas, testavimo ataskaitos užpildymas – {{ $tests / 60 }} val.</li>--}}
                     </ul>
 
-                    <p><span class="bold">Viso:</span> {{ $total / 60}} val.</p>
+                    <p><span class="bold">Viso:</span> {{ $total}} val.</p>
                 </div>
             </div>
 

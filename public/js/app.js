@@ -2414,7 +2414,7 @@ __webpack_require__.r(__webpack_exports__);
         i.forEach(function (e) {
           return total += e.time;
         });
-        return parseInt(total / 60);
+        return parseInt(total);
       } else {
         return '';
       }
@@ -2583,11 +2583,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     addTime: function addTime(e) {
       if (e.indexOf('min') > -1) {
-        this.time += this.removeChr(e);
+        this.time += this.removeChr(e) / 60;
       } else if (e.indexOf('h') > -1) {
-        this.time += this.removeChr(e) * 60;
+        this.time += this.removeChr(e);
       } else if (e.indexOf('d') > -1) {
-        this.time += this.removeChr(e) * 480;
+        this.time += this.removeChr(e) * 8;
       }
 
       this.timeValid = this.time > 0;
@@ -51984,34 +51984,6 @@ var render = function() {
                   0
                 ),
                 _vm._v(" "),
-                _vm.time > 0
-                  ? _c("div", { staticClass: "span-time" }, [
-                      _c("label", [_vm._v(" Time (min): ")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.time,
-                            expression: "time"
-                          }
-                        ],
-                        staticClass: "step-time",
-                        attrs: { type: "text", disabled: "" },
-                        domProps: { value: _vm.time },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.time = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
                 _c("div", { staticClass: "time-to-add" }, [
                   _c("i", {
                     staticClass: "fa fa-calculator",
@@ -52020,9 +51992,9 @@ var render = function() {
                   _vm._v(" Total time: "),
                   _c("span", {
                     staticClass: "total-time",
-                    domProps: { textContent: _vm._s(_vm.time / 60) }
+                    domProps: { textContent: _vm._s(_vm.time) }
                   }),
-                  _vm._v(" h.\n                ")
+                  _vm._v(" h.\n                    ")
                 ]),
                 _vm._v(" "),
                 _vm.message.length > 0
@@ -52107,7 +52079,9 @@ var render = function() {
                                 staticClass: "fa fa-floppy-o",
                                 attrs: { "aria-hidden": "true" }
                               }),
-                              _vm._v(" Save Evaluation\n                    ")
+                              _vm._v(
+                                " Save Evaluation\n                        "
+                              )
                             ]
                           )
                         : _vm._e(),
@@ -52124,7 +52098,9 @@ var render = function() {
                                 staticClass: "fa fa-cloud-upload",
                                 attrs: { "aria-hidden": "true" }
                               }),
-                              _vm._v(" Update Evaluation\n                    ")
+                              _vm._v(
+                                " Update Evaluation\n                        "
+                              )
                             ]
                           )
                         : _vm._e(),
@@ -52140,7 +52116,7 @@ var render = function() {
                             staticClass: "fa fa-eraser",
                             attrs: { "aria-hidden": "true" }
                           }),
-                          _vm._v(" Clear\n                    ")
+                          _vm._v(" Clear\n                        ")
                         ]
                       )
                     ])
@@ -52474,7 +52450,7 @@ var render = function() {
                                     _vm._s(temp.name) +
                                       " (" +
                                       _vm._s(temp.time) +
-                                      " min.)\n                    "
+                                      " val.)\n                    "
                                   )
                                 ]
                               )
@@ -52657,7 +52633,7 @@ var render = function() {
                         _vm._s(step.name) +
                           " (" +
                           _vm._s(step.time) +
-                          "\n                    min.)\n                "
+                          "\n                    val.)\n                "
                       )
                     ]
                   ),
@@ -52713,7 +52689,7 @@ var render = function() {
                     _vm._v(" Total time: "),
                     _c("span", {
                       staticClass: "total-time",
-                      domProps: { textContent: _vm._s(_vm.total / 60) }
+                      domProps: { textContent: _vm._s(_vm.total) }
                     }),
                     _vm._v(" h.")
                   ]),

@@ -78,7 +78,7 @@
                 let total = 0;
                 if (typeof i !== 'undefined') {
                     i.forEach(e => total += e.time);
-                    return parseInt(total / 60);
+                    return parseInt(total);
                 } else {
                     return '';
                 }
