@@ -197,25 +197,25 @@ class EvaluationController extends Controller
         $section->addText('Atsakymas: ', array('name' => 'Arial', 'size' => 10, 5, 'bold' => true));
 
         foreach ($items as $item) {
-            $text = $item->name . ' - ' . ($item->time / 60) . ' val.';
+            $text = $item->name . ' - ' . ($item->time) . ' val.';
             $section->addListItem($text, 0, null, $multilevelNumberingStyleName);
         }
 
         $section->addTextBreak(1);
 
         foreach ($analise_items as $item) {
-            $section->addListItem($item->name . ' - ' . ($item->time / 60) . ' val.');
+            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.');
         }
 
-        $section->addListItem('Programavimas – ' . ($items->total / 60) . ' val.');
+        $section->addListItem('Programavimas – ' . ($items->total) . ' val.');
 
         foreach ($test_items as $item) {
-            $section->addListItem($item->name . ' - ' . ($item->time / 60) . ' val.');
+            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.');
         }
 
         $section->addTextBreak(1);
 
-        $section->addText('Viso: ' . ($total / 60) . ' val.', ['name' => 'Arial', 'size' => 10, 5]);
+        $section->addText('Viso: ' . ($total) . ' val.', ['name' => 'Arial', 'size' => 10, 5]);
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
