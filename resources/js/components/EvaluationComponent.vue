@@ -79,6 +79,9 @@
                         <button class="btn btn-sm btn-success" @click="emptyFields"><i class="fa fa-eraser"
                                                                                        aria-hidden="true"></i> Clear
                         </button>
+                        <button class="btn btn-sm btn-outline-secondary" @click="itemClone()">
+                            <i class="fa fa-clone" aria-hidden="true"></i> Clone
+                        </button>
                     </div>
 
                 </div>
@@ -154,8 +157,8 @@ export default {
                     task_id: this.$root.$data.task,
                     options: this.options,
                     items: this.revals,
-                }).then((response) => {
-                    // this.emptyFields();
+                }).then((r) => {
+                    this.evalId = r.data;
                 }).catch((error) => {
                     this.$root.fetchError(error);
                 });
@@ -173,6 +176,8 @@ export default {
                     options: this.options,
                     items: this.revals,
                     id: this.evald
+                }).then((r) => {
+                    console.log(r.data);
                 }).catch((error) => {
                     this.$root.fetchError(error);
                 });
@@ -243,7 +248,13 @@ export default {
         },
         onChanged: function (event) {
             this.isSaved = false;
-        },
+        }, itemClone() {
+            axios.post('/clone/', {'id': this.evald, 'options': this.options, 'items': this.revals}).then(r => {
+                console.log(r.data);
+            }).catch((error) => {
+                this.$root.fetchError(error);
+            });
+        }
     },
     computed: {
         // revals: {

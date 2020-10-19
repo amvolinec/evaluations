@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupSeeder::class);
         $this->call(EvaluationSeeder::class);
         $this->call(StepSeeder::class);
+        $this->call(TypeSeeder::class);
     }
 }

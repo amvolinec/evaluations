@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->group(function () {
 
     Route::resources([
-        'group' => 'GroupController',
+//        'group' => 'GroupController',
         'task' => 'TaskController',
         'step' => 'StepController',
         'evaluation' => 'EvaluationController',
@@ -45,4 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::get('dump', 'DumpController@run')->name('dump');
     Route::get('users', 'UserController@get')->name('users.get');
     Route::post('users', 'UserController@set')->name('users.set');
+
+    Route::post('clone', 'EvaluationController@clone')->name('eval.clone');
+});
+Route::group(['middleware' => ['web', 'auth']], function () {
+    Route::resource('task', 'TaskController');
+    Route::post('task/find/', 'TaskController@find')->name('task.find');
+    Route::get('task/find/{string}', 'TaskController@find')->name('task.find.get');
+    Route::resource('group', 'GroupController');
+    Route::post('group/find/', 'GroupController@find')->name('group.find');
+    Route::get('group/find/{string}', 'GroupController@find')->name('group.find.get');
 });

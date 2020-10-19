@@ -26,6 +26,7 @@ Vue.component('evaluations', require('./components/EvaluationComponent.vue').def
 Vue.component('eval-items', require('./components/ListComponent.vue').default);
 Vue.component('errors', require('./components/ErrorsComponent.vue').default);
 Vue.component('users', require('./components/UserComponent.vue').default);
+Vue.component('find', require('./components/FindComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

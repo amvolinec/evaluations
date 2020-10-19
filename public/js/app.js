@@ -2029,6 +2029,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2106,7 +2109,8 @@ __webpack_require__.r(__webpack_exports__);
           task_id: this.$root.$data.task,
           options: this.options,
           items: this.revals
-        }).then(function (response) {// this.emptyFields();
+        }).then(function (r) {
+          _this2.evalId = r.data;
         })["catch"](function (error) {
           _this2.$root.fetchError(error);
         });
@@ -2126,6 +2130,8 @@ __webpack_require__.r(__webpack_exports__);
           options: this.options,
           items: this.revals,
           id: this.evald
+        }).then(function (r) {
+          console.log(r.data);
         })["catch"](function (error) {
           _this3.$root.fetchError(error);
         });
@@ -2206,6 +2212,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     onChanged: function onChanged(event) {
       this.isSaved = false;
+    },
+    itemClone: function itemClone() {
+      var _this4 = this;
+
+      axios.post('/clone/', {
+        'id': this.evald,
+        'options': this.options,
+        'items': this.revals
+      }).then(function (r) {
+        console.log(r.data);
+      })["catch"](function (error) {
+        _this4.$root.fetchError(error);
+      });
     }
   },
   computed: {// revals: {
@@ -2216,6 +2235,94 @@ __webpack_require__.r(__webpack_exports__);
     //         this.$store.commit('updateList', value);
     //     }
     // }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FindComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FindComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    route: String,
+    fields: String,
+    search: String
+  },
+  data: function data() {
+    return {
+      items: [],
+      columns: [],
+      message: '',
+      showDrop: false,
+      string: ''
+    };
+  },
+  mounted: function mounted() {
+    this.columns = this.fields.split(',');
+    this.string = this.search;
+  },
+  methods: {
+    closePopup: function closePopup() {
+      this.$root.$data.nope = false;
+    },
+    findString: function findString(e) {
+      var _this = this;
+
+      var route = '/' + this.route + '/find';
+
+      if (e.key === 'Enter') {
+        this.getView();
+        return false;
+      }
+
+      axios.post(route, {
+        'string': this.string,
+        'columns': this.fields
+      }).then(function (r) {
+        _this.showDrop = true;
+        _this.items = r.data;
+      });
+    },
+    setItem: function setItem(item) {
+      document.location.href = '/' + this.route + '/' + item.id;
+      return false;
+    },
+    getView: function getView() {
+      document.location.href = '/' + this.route + '/find/' + this.string;
+    },
+    clearSearch: function clearSearch() {
+      document.location.href = '/' + this.route;
+    }
   }
 });
 
@@ -2352,6 +2459,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2433,6 +2545,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -21239,7 +21366,7 @@ class Echo {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.15';
+  var VERSION = '4.17.20';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -24946,8 +25073,21 @@ class Echo {
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
+      if (iteratees.length) {
+        iteratees = arrayMap(iteratees, function(iteratee) {
+          if (isArray(iteratee)) {
+            return function(value) {
+              return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
+            }
+          }
+          return iteratee;
+        });
+      } else {
+        iteratees = [identity];
+      }
+
       var index = -1;
-      iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
+      iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 
       var result = baseMap(collection, function(value, key, collection) {
         var criteria = arrayMap(iteratees, function(iteratee) {
@@ -25204,6 +25344,10 @@ class Echo {
         var key = toKey(path[index]),
             newValue = value;
 
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+          return object;
+        }
+
         if (index != lastIndex) {
           var objValue = nested[key];
           newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -25356,11 +25500,14 @@ class Echo {
      *  into `array`.
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
-      value = iteratee(value);
-
       var low = 0,
-          high = array == null ? 0 : array.length,
-          valIsNaN = value !== value,
+          high = array == null ? 0 : array.length;
+      if (high === 0) {
+        return 0;
+      }
+
+      value = iteratee(value);
+      var valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
           valIsUndefined = value === undefined;
@@ -26845,10 +26992,11 @@ class Echo {
       if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
         return false;
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(array);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var arrStacked = stack.get(array);
+      var othStacked = stack.get(other);
+      if (arrStacked && othStacked) {
+        return arrStacked == other && othStacked == array;
       }
       var index = -1,
           result = true,
@@ -27010,10 +27158,11 @@ class Echo {
           return false;
         }
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(object);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var objStacked = stack.get(object);
+      var othStacked = stack.get(other);
+      if (objStacked && othStacked) {
+        return objStacked == other && othStacked == object;
       }
       var result = true;
       stack.set(object, other);
@@ -30394,6 +30543,10 @@ class Echo {
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
      * // => objects for ['barney']
+     *
+     * // Combining several predicates using `_.overEvery` or `_.overSome`.
+     * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
+     * // => objects for ['fred', 'barney']
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -31143,15 +31296,15 @@ class Echo {
      * var users = [
      *   { 'user': 'fred',   'age': 48 },
      *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 40 },
+     *   { 'user': 'fred',   'age': 30 },
      *   { 'user': 'barney', 'age': 34 }
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -36026,11 +36179,11 @@ class Echo {
 
       // Use a sourceURL for easier debugging.
       // The sourceURL gets injected into the source that's eval-ed, so be careful
-      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
-      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
+      // to normalize all kinds of whitespace, so e.g. newlines (and unicode versions of it) can't sneak in
+      // and escape the comment, thus injecting code that gets evaled.
       var sourceURL = '//# sourceURL=' +
         (hasOwnProperty.call(options, 'sourceURL')
-          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
+          ? (options.sourceURL + '').replace(/\s/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -36063,8 +36216,6 @@ class Echo {
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
-      // Like with sourceURL, we take care to not check the option's prototype,
-      // as this configuration is a code injection vector.
       var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
@@ -36771,6 +36922,9 @@ class Echo {
      * values against any array or object value, respectively. See `_.isEqual`
      * for a list of supported value comparisons.
      *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
+     *
      * @static
      * @memberOf _
      * @since 3.0.0
@@ -36786,6 +36940,10 @@ class Echo {
      *
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
+     *
+     * // Checking for several possible values
+     * _.filter(objects, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
@@ -36799,6 +36957,9 @@ class Echo {
      * **Note:** Partial comparisons will match empty array and empty object
      * `srcValue` values against any array or object value, respectively. See
      * `_.isEqual` for a list of supported value comparisons.
+     *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
      *
      * @static
      * @memberOf _
@@ -36816,6 +36977,10 @@ class Echo {
      *
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
+     *
+     * // Checking for several possible values
+     * _.filter(objects, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
@@ -37039,6 +37204,10 @@ class Echo {
      * Creates a function that checks if **all** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -37065,6 +37234,10 @@ class Echo {
      * Creates a function that checks if **any** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -37084,6 +37257,9 @@ class Echo {
      *
      * func(NaN);
      * // => false
+     *
+     * var matchesFunc = _.overSome([{ 'a': 1 }, { 'a': 2 }])
+     * var matchesPropertyFunc = _.overSome([['a', 1], ['a', 2]])
      */
     var overSome = createOver(arraySome);
 
@@ -52118,6 +52294,25 @@ var render = function() {
                           }),
                           _vm._v(" Clear\n                        ")
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-outline-secondary",
+                          on: {
+                            click: function($event) {
+                              return _vm.itemClone()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-clone",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(" Clone\n                        ")
+                        ]
                       )
                     ])
                   : _vm._e()
@@ -52129,6 +52324,104 @@ var render = function() {
       ])
     ]
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FindComponent.vue?vue&type=template&id=056c80e9&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FindComponent.vue?vue&type=template&id=056c80e9& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "d-inline-block mt-1 ml-2" }, [
+    _c("div", { staticClass: "d-inline-block drop-find" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.string,
+            expression: "string"
+          }
+        ],
+        staticClass: "d-inline-block form-control form-control-sm",
+        attrs: { id: "find", type: "text" },
+        domProps: { value: _vm.string },
+        on: {
+          keyup: _vm.findString,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.string = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm.showDrop
+        ? _c(
+            "div",
+            { staticClass: "dropdown-select" },
+            _vm._l(_vm.items, function(item) {
+              return _c("ul", [
+                _c(
+                  "li",
+                  {
+                    attrs: { "data-id": item.id },
+                    on: {
+                      click: function($event) {
+                        return _vm.setItem(item)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "drop-line" },
+                      _vm._l(_vm.columns, function(column) {
+                        return _c(
+                          "div",
+                          { staticClass: "find", class: column },
+                          [_vm._v(_vm._s(item[column]))]
+                        )
+                      }),
+                      0
+                    )
+                  ]
+                )
+              ])
+            }),
+            0
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "d-inline-block" }, [
+      _c("div", { staticClass: "drop-btn", on: { click: _vm.getView } }, [
+        _c("i", { staticClass: "far fa-search" })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "d-inline-block" }, [
+      _c("div", { staticClass: "drop-btn", on: { click: _vm.clearSearch } }, [
+        _c("i", { staticClass: "fas fa-undo" })
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52392,327 +52685,325 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "list-steps", attrs: { id: "steps" } }, [
     _vm.task > 0
-      ? _c(
-          "div",
-          [
-            _vm.edit == false
-              ? _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "inline mb-2",
-                      staticStyle: { width: "calc(100% + 30px)" }
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.stepToAdd,
-                            expression: "stepToAdd"
-                          }
-                        ],
-                        staticClass: "form-control-sm",
-                        attrs: { type: "text", placeholder: "Name" },
-                        domProps: { value: _vm.stepToAdd },
-                        on: {
-                          keyup: function($event) {
-                            return _vm.findStep($event)
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.stepToAdd = $event.target.value
-                          }
+      ? _c("div", { attrs: { id: "steps-outer" } }, [
+          _vm.edit == false
+            ? _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "inline mb-2",
+                    staticStyle: { width: "calc(100% + 30px)" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.stepToAdd,
+                          expression: "stepToAdd"
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.temps.length > 0 && !_vm.escaped
-                        ? _c(
-                            "div",
-                            { staticClass: "drop-box" },
-                            _vm._l(_vm.temps, function(temp) {
-                              return _c(
-                                "div",
-                                {
-                                  staticClass: "group-line down-item",
-                                  attrs: { "temp-id": temp.id },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.selectTemplate(temp)
-                                    }
+                      ],
+                      staticClass: "form-control-sm",
+                      attrs: { type: "text", placeholder: "Name" },
+                      domProps: { value: _vm.stepToAdd },
+                      on: {
+                        keyup: function($event) {
+                          return _vm.findStep($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.stepToAdd = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.temps.length > 0 && !_vm.escaped
+                      ? _c(
+                          "div",
+                          { staticClass: "drop-box" },
+                          _vm._l(_vm.temps, function(temp) {
+                            return _c(
+                              "div",
+                              {
+                                staticClass: "group-line down-item",
+                                attrs: { "temp-id": temp.id },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectTemplate(temp)
                                   }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(temp.name) +
-                                      " (" +
-                                      _vm._s(temp.time) +
-                                      " val.)\n                    "
-                                  )
-                                ]
-                              )
-                            }),
-                            0
-                          )
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.timeToAdd,
-                        expression: "timeToAdd"
-                      }
-                    ],
-                    class: { "toggle-valid": _vm.timeValid },
-                    attrs: { type: "text", placeholder: "Time: 1d:1h" },
-                    domProps: { value: _vm.timeToAdd },
-                    on: {
-                      keyup: _vm.checkTime,
-                      focusout: function($event) {
-                        _vm.escaped = false
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.timeToAdd = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-success",
-                      on: { click: _vm.addStep }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-floppy-o",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.edit == true
-              ? _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.stepEdit.id,
-                        expression: "stepEdit.id"
-                      }
-                    ],
-                    attrs: { type: "hidden" },
-                    domProps: { value: _vm.stepEdit.id },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.stepEdit, "id", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.stepEdit.name,
-                        expression: "stepEdit.name"
-                      }
-                    ],
-                    attrs: { type: "text", placeholder: "Name" },
-                    domProps: { value: _vm.stepEdit.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.stepEdit, "name", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.stepEdit.time,
-                        expression: "stepEdit.time"
-                      }
-                    ],
-                    attrs: { type: "number", placeholder: "Time (min)" },
-                    domProps: { value: _vm.stepEdit.time },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.stepEdit, "time", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-success",
-                      on: { click: _vm.saveStep }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-floppy-o",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" Save Step")
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.time > 0
-              ? _c("span", { staticClass: "span-time" }, [
-                  _c("label", [_vm._v("Time (min): ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.time,
-                        expression: "time"
-                      }
-                    ],
-                    staticClass: "step-time",
-                    attrs: { type: "text", disabled: "" },
-                    domProps: { value: _vm.time },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.time = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm._l(_vm.steps, function(step) {
-              return _c("div", { staticClass: "group-line" }, [
-                _c("div", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "group-text",
-                      class: { "toggle-item": step.selected },
-                      attrs: { "tesk-id": step.id },
-                      on: {
-                        click: function($event) {
-                          return _vm.changeStep(step, $event)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        _vm._s(step.name) +
-                          " (" +
-                          _vm._s(step.time) +
-                          "\n                    val.)\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-outline-secondary",
-                      attrs: { "step-id": step.id },
-                      on: {
-                        click: function($event) {
-                          return _vm.editStep(step)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-pencil",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-outline-danger",
-                      attrs: { "step-id": step.id },
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteStep(step)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-trash-o",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ]
-                  )
-                ])
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(temp.name) +
+                                    " (" +
+                                    _vm._s(temp.time) +
+                                    " val.)\n                    "
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      : _vm._e()
+                  ]
+                )
               ])
-            }),
+            : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.timeToAdd,
+          expression: "timeToAdd"
+        }
+      ],
+      class: { "toggle-valid": _vm.timeValid },
+      attrs: { type: "text", placeholder: "Time: 1d:1h" },
+      domProps: { value: _vm.timeToAdd },
+      on: {
+        keyup: _vm.checkTime,
+        focusout: function($event) {
+          _vm.escaped = false
+        },
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.timeToAdd = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "btn btn-sm btn-success", on: { click: _vm.addStep } },
+      [
+        _c("i", {
+          staticClass: "fa fa-floppy-o",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _vm.edit == true
+      ? _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.stepEdit.id,
+                expression: "stepEdit.id"
+              }
+            ],
+            attrs: { type: "hidden" },
+            domProps: { value: _vm.stepEdit.id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.stepEdit, "id", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.stepEdit.name,
+                expression: "stepEdit.name"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Name" },
+            domProps: { value: _vm.stepEdit.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.stepEdit, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.stepEdit.time,
+                expression: "stepEdit.time"
+              }
+            ],
+            attrs: { type: "number", placeholder: "Time (min)" },
+            domProps: { value: _vm.stepEdit.time },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.stepEdit, "time", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-success",
+              on: { click: _vm.saveStep }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-floppy-o",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" Save Step\n        ")
+            ]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.time > 0
+      ? _c("span", { staticClass: "span-time" }, [
+          _c("label", [_vm._v("Time (min): ")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.time,
+                expression: "time"
+              }
+            ],
+            staticClass: "step-time",
+            attrs: { type: "text", disabled: "" },
+            domProps: { value: _vm.time },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.time = $event.target.value
+              }
+            }
+          })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "steps-inner" },
+      _vm._l(_vm.steps, function(step) {
+        return _c("div", { staticClass: "group-line" }, [
+          _c("div", [
+            _c(
+              "div",
+              {
+                staticClass: "group-text",
+                class: { "toggle-item": step.selected },
+                attrs: { "tesk-id": step.id },
+                on: {
+                  click: function($event) {
+                    return _vm.changeStep(step, $event)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  _vm._s(step.name) +
+                    " (" +
+                    _vm._s(step.time) +
+                    "\n                    val.)\n                "
+                )
+              ]
+            ),
             _vm._v(" "),
-            _vm.total > 0
-              ? _c("div", { staticClass: "mt-1" }, [
-                  _c("div", { staticClass: "time-to-add" }, [
-                    _c("i", {
-                      staticClass: "fa fa-calculator",
-                      attrs: { "aria-hidden": "true" }
-                    }),
-                    _vm._v(" Total time: "),
-                    _c("span", {
-                      staticClass: "total-time",
-                      domProps: { textContent: _vm._s(_vm.total) }
-                    }),
-                    _vm._v(" h.")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-success",
-                      on: { click: _vm.addToEval }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-cart-plus",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" Add To Evaluation")
-                    ]
-                  )
-                ])
-              : _vm._e()
-          ],
-          2
-        )
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-secondary",
+                attrs: { "step-id": step.id },
+                on: {
+                  click: function($event) {
+                    return _vm.editStep(step)
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-pencil",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-danger",
+                attrs: { "step-id": step.id },
+                on: {
+                  click: function($event) {
+                    return _vm.deleteStep(step)
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-trash-o",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _vm.total > 0
+      ? _c("div", { staticClass: "mt-1" }, [
+          _c("div", { staticClass: "time-to-add" }, [
+            _c("i", {
+              staticClass: "fa fa-calculator",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" Total time: "),
+            _c("span", {
+              staticClass: "total-time",
+              domProps: { textContent: _vm._s(_vm.total) }
+            }),
+            _vm._v(" h.\n        ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-success",
+              on: { click: _vm.addToEval }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-cart-plus",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" Add To Evaluation\n        ")
+            ]
+          )
+        ])
       : _vm._e(),
     _vm._v(" "),
     _vm.task == 0 ? _c("div", [_vm._v("Select Task first...")]) : _vm._e()
@@ -68516,6 +68807,7 @@ Vue.component('evaluations', __webpack_require__(/*! ./components/EvaluationComp
 Vue.component('eval-items', __webpack_require__(/*! ./components/ListComponent.vue */ "./resources/js/components/ListComponent.vue")["default"]);
 Vue.component('errors', __webpack_require__(/*! ./components/ErrorsComponent.vue */ "./resources/js/components/ErrorsComponent.vue")["default"]);
 Vue.component('users', __webpack_require__(/*! ./components/UserComponent.vue */ "./resources/js/components/UserComponent.vue")["default"]);
+Vue.component('find', __webpack_require__(/*! ./components/FindComponent.vue */ "./resources/js/components/FindComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -68745,6 +69037,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvaluationComponent_vue_vue_type_template_id_40907e86___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvaluationComponent_vue_vue_type_template_id_40907e86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/FindComponent.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/FindComponent.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FindComponent_vue_vue_type_template_id_056c80e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FindComponent.vue?vue&type=template&id=056c80e9& */ "./resources/js/components/FindComponent.vue?vue&type=template&id=056c80e9&");
+/* harmony import */ var _FindComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FindComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FindComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FindComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FindComponent_vue_vue_type_template_id_056c80e9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FindComponent_vue_vue_type_template_id_056c80e9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FindComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FindComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/FindComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FindComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FindComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FindComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FindComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FindComponent.vue?vue&type=template&id=056c80e9&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/FindComponent.vue?vue&type=template&id=056c80e9& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FindComponent_vue_vue_type_template_id_056c80e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FindComponent.vue?vue&type=template&id=056c80e9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FindComponent.vue?vue&type=template&id=056c80e9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FindComponent_vue_vue_type_template_id_056c80e9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FindComponent_vue_vue_type_template_id_056c80e9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

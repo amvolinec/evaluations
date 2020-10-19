@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
         "phpoffice/phpword": "^0.17.0",
-        "pusher/pusher-php-server": "^4.1"
+        "pusher/pusher-php-server": "^4.1",
+        "spatie/laravel-permission": "^3.17"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -36,7 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Avart\\Forms\\": "packages/avart/forms/src",
+            "Avart\\Forms\\Models\\": "packages/avart/forms/src/models",
+            "Avart\\Forms\\Controllers\\": "packages/avart/forms/src/controllers",
+            "Avart\\Forms\\Requests\\": "packages/avart/forms/src/requests",
+            "Avart\\Forms\\Creators\\": "packages/avart/forms/src/creators"
         },
         "classmap": [
             "database/seeds",

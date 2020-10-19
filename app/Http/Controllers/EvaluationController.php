@@ -40,9 +40,8 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
     {
-        Evaluation::create($request->except(['options', 'items']));
-
-        return response()->json('Evaluation added');
+        $eval = Evaluation::create($request->except(['options', 'items']));
+        return response()->json($eval->id);
     }
 
     /**
@@ -222,5 +221,26 @@ class EvaluationController extends Controller
         $path = public_path() . '/reports/' . $e->name . '.docx';
         $objWriter->save($path);
         return $path;
+    }
+
+    public function clone(Request $request){
+        $eval = $this->getOne($request);
+
+        $saved_eval = $eval->replicate();
+        $saved_eval->push();
+        $saved_eval->items = [];
+        $saved_eval->save();
+
+        foreach($eval->items AS $item) {
+            Item::create([
+                'name' => $item->name,
+                'time' => $item->time,
+                'evaluation_id' => $saved_eval->id,
+                'step_id' => $item->step_id,
+                'group_id' => $item->group_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
     }
 }

@@ -2182,22 +2182,12 @@ pre code {
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
-.form-control::-webkit-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
 .form-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
 }
 
 .form-control:-ms-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
-.form-control::-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -11053,8 +11043,7 @@ a.text-dark:focus {
 :root .fa-rotate-270,
 :root .fa-flip-horizontal,
 :root .fa-flip-vertical {
-  -webkit-filter: none;
-          filter: none;
+  filter: none;
 }
 
 .fa-stack {
@@ -13949,6 +13938,8 @@ textarea {
   padding: 0 6px;
   border-bottom: 1px solid #e9ecef;
   line-height: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .group-text {
@@ -14098,5 +14089,11 @@ span.bold {
 
 .card-body {
   padding: 4px;
+}
+
+.steps-inner {
+  max-height: 437px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
