@@ -40,9 +40,8 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
     {
-        Evaluation::create($request->except(['options', 'items']));
-
-        return response()->json('Evaluation added');
+        $eval = Evaluation::create($request->except(['options', 'items']));
+        return response()->json($eval->id);
     }
 
     /**
@@ -109,7 +108,7 @@ class EvaluationController extends Controller
 
     public function get()
     {
-        return Evaluation::with(['items'])->orderBy('name')->get();
+        return Evaluation::with(['items'])->orderBy('created_at', 'desc')->get();
     }
 
     public function getOne(Request $request)
@@ -197,30 +196,51 @@ class EvaluationController extends Controller
         $section->addText('Atsakymas: ', array('name' => 'Arial', 'size' => 10, 5, 'bold' => true));
 
         foreach ($items as $item) {
-            $text = $item->name . ' - ' . ($item->time / 60) . ' val.';
+            $text = $item->name . ' - ' . ($item->time) . ' val.';
             $section->addListItem($text, 0, null, $multilevelNumberingStyleName);
         }
 
         $section->addTextBreak(1);
 
         foreach ($analise_items as $item) {
-            $section->addListItem($item->name . ' - ' . ($item->time / 60) . ' val.');
+            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.');
         }
 
-        $section->addListItem('Programavimas – ' . ($items->total / 60) . ' val.');
+        $section->addListItem('Programavimas – ' . ($items->total) . ' val.');
 
         foreach ($test_items as $item) {
-            $section->addListItem($item->name . ' - ' . ($item->time / 60) . ' val.');
+            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.');
         }
 
         $section->addTextBreak(1);
 
-        $section->addText('Viso: ' . ($total / 60) . ' val.', ['name' => 'Arial', 'size' => 10, 5]);
+        $section->addText('Viso: ' . ($total) . ' val.', ['name' => 'Arial', 'size' => 10, 5]);
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
         $path = public_path() . '/reports/' . $e->name . '.docx';
         $objWriter->save($path);
         return $path;
+    }
+
+    public function clone(Request $request){
+        $eval = $this->getOne($request);
+
+        $saved_eval = $eval->replicate();
+        $saved_eval->push();
+        $saved_eval->items = [];
+        $saved_eval->save();
+
+        foreach($eval->items AS $item) {
+            Item::create([
+                'name' => $item->name,
+                'time' => $item->time,
+                'evaluation_id' => $saved_eval->id,
+                'step_id' => $item->step_id,
+                'group_id' => $item->group_id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
     }
 }

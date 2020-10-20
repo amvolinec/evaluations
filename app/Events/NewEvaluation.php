@@ -25,7 +25,7 @@ class NewEvaluation implements ShouldBroadcast
      */
     public function __construct()
     {
-        $this->evaluations = Evaluation::with(['items'])->orderBy('name')->get()->toArray();
+        $this->evaluations = Evaluation::with(['items'])->orderBy('created_at', 'desc')->get()->toArray();
     }
 
     /**

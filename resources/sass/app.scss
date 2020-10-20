@@ -8,6 +8,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+//@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+//@import '~@fortawesome/fontawesome-free/scss/regular';
+//@import '~@fortawesome/fontawesome-free/scss/solid';
+//@import '~@fortawesome/fontawesome-free/scss/brands';
+
 @import "node_modules/font-awesome/scss/font-awesome.scss";
 
 @font-face {
@@ -33,6 +38,8 @@ input, textarea {
     padding: 0 6px;
     border-bottom: 1px solid #e9ecef;
     line-height: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .group-text {
@@ -174,4 +181,14 @@ span.bold {
 
 .navbar-light .navbar-brand {
     color: #666666 !important;
+}
+
+.card-body {
+    padding: 4px;
+}
+
+.steps-inner {
+    max-height: 437px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

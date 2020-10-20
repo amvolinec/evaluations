@@ -40,13 +40,13 @@
                         </div>
                     </draggable>
 
-                    <div v-if="time > 0" class="span-time">
-                        <label> Time (min): </label>
-                        <input class="step-time" type="text" v-model="time" disabled>
-                    </div>
+<!--                    <div v-if="time > 0" class="span-time">-->
+<!--                        <label> Time (min): </label>-->
+<!--                        <input class="step-time" type="text" v-model="time" disabled>-->
+<!--                    </div>-->
 
                     <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span
-                        class="total-time" v-text="time / 60"></span> h.
+                        class="total-time" v-text="time"></span> h.
                     </div>
 
                     <div class="mt-3" v-if="message.length > 0">
@@ -78,6 +78,9 @@
                         </button>
                         <button class="btn btn-sm btn-success" @click="emptyFields"><i class="fa fa-eraser"
                                                                                        aria-hidden="true"></i> Clear
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" @click="itemClone()">
+                            <i class="fa fa-clone" aria-hidden="true"></i> Clone
                         </button>
                     </div>
 
@@ -154,8 +157,8 @@ export default {
                     task_id: this.$root.$data.task,
                     options: this.options,
                     items: this.revals,
-                }).then((response) => {
-                    // this.emptyFields();
+                }).then((r) => {
+                    this.evalId = r.data;
                 }).catch((error) => {
                     this.$root.fetchError(error);
                 });
@@ -173,6 +176,8 @@ export default {
                     options: this.options,
                     items: this.revals,
                     id: this.evald
+                }).then((r) => {
+                    console.log(r.data);
                 }).catch((error) => {
                     this.$root.fetchError(error);
                 });
@@ -243,7 +248,13 @@ export default {
         },
         onChanged: function (event) {
             this.isSaved = false;
-        },
+        }, itemClone() {
+            axios.post('/clone/', {'id': this.evald, 'options': this.options, 'items': this.revals}).then(r => {
+                console.log(r.data);
+            }).catch((error) => {
+                this.$root.fetchError(error);
+            });
+        }
     },
     computed: {
         // revals: {
