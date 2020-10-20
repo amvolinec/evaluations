@@ -10,7 +10,7 @@ class DumpController extends Controller
     {
         $result = "//user//local//bin//dumper.sh";
 
-        if(env('DB_DUMP_SUDO') === true){
+        if(env('DB_DUMP_SUDO') === 'true'){
 
             shell_exec('/user/local/bin/dumper.sh');
 
