@@ -8,11 +8,11 @@ class DumpController extends Controller
 {
     protected function run()
     {
-        $result = "//user//local//bin//dumper.sh";
+        $result = "Dump successfully created!";
 
-        if(env('DB_DUMP_SUDO') === 'true'){
+        if(env('DB_DUMP_SUDO') === true){
 
-            shell_exec('/user/local/bin/dumper.sh');
+            shell_exec('/usr/local/bin/dumper.sh');
 
         } else {
             if(!empty(env('DB_PASSWORD'))){
