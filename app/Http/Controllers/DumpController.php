@@ -9,12 +9,8 @@ class DumpController extends Controller
     protected function run()
     {
         if(env('DB_DUMP_SUDO') === true){
-//            shell_exec('sudo su');
 
-            $cmd = sprintf('sudo mysqldump -R --skip-triggers --no-create-info --no-create-db --ignore-table=%2$s.migrations %1$s > %2$s',
-                env('DB_DATABASE'),
-                env('DB_DUMP_PATH') . '/' .env('DB_DATABASE'). '_' . date('Ymd_His') . '.sql'
-            );
+            shell_exec('/user/local/bin/dumper.sh');
 
         } else {
             if(!empty(env('DB_PASSWORD'))){
@@ -31,11 +27,10 @@ class DumpController extends Controller
                     env('DB_DUMP_PATH') . '/' .env('DB_DATABASE'). '_' . date('Ymd_His') . '.sql'
                 );
             }
+
+            shell_exec($cmd);
+            $result = $cmd;
         }
-
-        shell_exec($cmd);
-
-        $result = $cmd;
 
         return view('dump', compact('result'));
     }
