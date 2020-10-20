@@ -8,6 +8,8 @@ class DumpController extends Controller
 {
     protected function run()
     {
+        $result = "//user//local//bin//dumper.sh";
+
         if(env('DB_DUMP_SUDO') === true){
 
             shell_exec('/user/local/bin/dumper.sh');
