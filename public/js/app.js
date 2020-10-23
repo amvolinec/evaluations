@@ -52242,7 +52242,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _vm.time > 0
-                  ? _c("div", { staticClass: "mt-3" }, [
+                  ? _c("div", { staticClass: "mt-3 ml-3" }, [
                       _vm.edit == false
                         ? _c(
                             "button",

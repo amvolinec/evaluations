@@ -29,4 +29,9 @@ options to match the credentials of the database you just created. This will all
 `php artisan migrate`
 `npm run dev`
 
+crate /usr/local/bin/dumper.sh if you have only root access to db from bash
+
+    #!/bin/bash
+    NOW=$(date +"%Y%m%d_%H%M%S")
+    mysqldump -u root -R --skip-triggers --no-create-info --no-create-db --ignore-table=vertdb.migrations vertdb > /var/www/html/evaluations/public/dumps/vertdb_$NOW.sql
 

@@ -69,7 +69,7 @@
                                   oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
                     </div>
 
-                    <div class="mt-3" v-if="time > 0">
+                    <div class="mt-3 ml-3" v-if="time > 0">
                         <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false"><i
                             class="fa fa-floppy-o" aria-hidden="true"></i> Save Evaluation
                         </button>
