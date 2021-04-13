@@ -5,7 +5,7 @@
         <div class="card-body">
 
             <div class="list-steps row" id="evaluations">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="">
                         <div class="flex-xl-fill mb-3">
                             <div class="p-1 bd-highlight">
@@ -55,7 +55,7 @@
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <h5 class="text-center m-1">Inquiry</h5>
 
                     <div class="m-2">

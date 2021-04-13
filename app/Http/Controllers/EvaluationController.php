@@ -163,6 +163,8 @@ class EvaluationController extends Controller
         list($analise, $analise_items, $test, $items, $total, $test_items) = $this->getParts($e);
         $options = $e->options;
 
+        $font = env('WORD_FONT', 'Tahoma');
+
         $phpWord = new PhpWord();
 
         $multilevelNumberingStyleName = 'multilevel';
@@ -178,43 +180,45 @@ class EvaluationController extends Controller
             )
         );
 
+        $predefinedMultilevel = array('color' => 'FF0000', 'listType' => \PhpOffice\PhpWord\Style\ListItem::TYPE_SQUARE_FILLED);
+
         $section = $phpWord->addSection();
 
-        $section->addText('FUTUREVOICE PAKLAUSIMAS', ['name' => 'Arial', 'size' => 10, 5], ['align' => 'center']);
-        $section->addText('KREIPINIO ID: ' . $e->name, ['name' => 'Arial', 'size' => 10, 5], ['align' => 'center']);
+        $section->addText('FUTUREVOICE PAKLAUSIMAS', ['name' => $font, 'size' => 10, 5], ['align' => 'center']);
+        $section->addText('KREIPINIO ID: ' . $e->name, ['name' => $font, 'size' => 10, 5], ['align' => 'center']);
         $section->addTextBreak(1);
-        $section->addText('Paklausimo data: ' . $e->date, ['name' => 'Arial', 'size' => 10, 5]);
-        $section->addText('Klientas: ' . $e->client, ['name' => 'Arial', 'size' => 10, 5]);
+        $section->addText('Paklausimo data: ' . $e->date, ['name' => $font, 'size' => 10, 5]);
+        $section->addText('Klientas: ' . $e->client, ['name' => $font, 'size' => 10, 5]);
         $section->addTextBreak(1);
-        $section->addText('Paklausimas: ', array('name' => 'Arial', 'size' => 10, 5, 'bold' => true));
+        $section->addText('Paklausimas: ', array('name' => $font, 'size' => 10, 5, 'bold' => true));
 
         foreach ($options as $option) {
-            $section->addListItem($option->name);
+            $section->addListItem($option->name, 0, ['name' => $font, 'size' => 10, 5], $multilevelNumberingStyleName);
         }
 
         $section->addTextBreak(1);
-        $section->addText('Atsakymas: ', array('name' => 'Arial', 'size' => 10, 5, 'bold' => true));
+        $section->addText('Atsakymas: ', array('name' => $font, 'size' => 10, 5, 'bold' => true));
 
         foreach ($items as $item) {
             $text = $item->name . ' - ' . ($item->time) . ' val.';
-            $section->addListItem($text, 0, null, $multilevelNumberingStyleName);
+            $section->addListItem($text, 0, ['name' => $font, 'size' => 10, 5]);
         }
 
         $section->addTextBreak(1);
 
         foreach ($analise_items as $item) {
-            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.');
+            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.', 0, ['name' => $font, 'size' => 10, 5], $predefinedMultilevel);
         }
 
-        $section->addListItem('Programavimas – ' . ($items->total) . ' val.');
+        $section->addListItem('Programavimas – ' . ($items->total) . ' val.', 0, ['name' => $font, 'size' => 10, 5], $predefinedMultilevel);
 
         foreach ($test_items as $item) {
-            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.');
+            $section->addListItem($item->name . ' - ' . ($item->time) . ' val.', 0, ['name' => $font, 'size' => 10, 5], $predefinedMultilevel);
         }
 
         $section->addTextBreak(1);
 
-        $section->addText('Viso: ' . ($total) . ' val.', ['name' => 'Arial', 'size' => 10, 5]);
+        $section->addText('Suma: ' . ($total) . ' val.', ['name' => $font, 'size' => 10, 5]);
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 

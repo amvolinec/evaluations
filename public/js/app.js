@@ -51960,7 +51960,7 @@ var render = function() {
           [
             _c(
               "div",
-              { staticClass: "col-md-6" },
+              { staticClass: "col-md-12" },
               [
                 _c("div", {}, [
                   _c("div", { staticClass: "flex-xl-fill mb-3" }, [
@@ -52187,7 +52187,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-md-6" },
+              { staticClass: "col-md-12" },
               [
                 _c("h5", { staticClass: "text-center m-1" }, [
                   _vm._v("Inquiry")
