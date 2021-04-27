@@ -70,7 +70,7 @@ export default {
         }, itemExport(item) {
             axios.post('/export/' + item.id).then(response => {
                 console.log(response.data);
-                let link = window.location.href + '/reports/' + response.data;
+                let link = 'reports/' + response.data;
                 window.open(link);
             }).catch((error) => {
                 this.$root.fetchError(error);

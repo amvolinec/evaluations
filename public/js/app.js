@@ -2507,7 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/export/' + item.id).then(function (response) {
         console.log(response.data);
-        var link = window.location.href + '/reports/' + response.data;
+        var link = 'reports/' + response.data;
         window.open(link);
       })["catch"](function (error) {
         _this4.$root.fetchError(error);
