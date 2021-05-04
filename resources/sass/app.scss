@@ -93,6 +93,8 @@ input, textarea {
 
 .card {
     margin-bottom: 1rem;
+    border: none;
+    box-shadow: 1px 1px 4px rgb(0 0 0 / 13%);
 }
 
 .card-header {
@@ -182,12 +184,12 @@ span.bold {
     color: #666666 !important;
 }
 
-//.card-body {
-//    padding: 4px;
-//}
-
 .steps-inner {
-    max-height: 437px;
+    max-height: 927px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+input, textarea {
+    border: 1px solid #d3f7d5a6 !important;
 }

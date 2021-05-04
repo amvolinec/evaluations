@@ -63,7 +63,7 @@
             </button>
         </div>
 
-        <div v-if="task == 0">Select Task first...</div>
+        <div v-if="task === 0"><small>Select Task first...</small></div>
     </div>
 </template>
 
