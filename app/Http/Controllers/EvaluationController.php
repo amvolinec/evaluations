@@ -6,6 +6,7 @@ use App\Evaluation;
 use App\Events\NewEvaluation;
 use App\Item;
 use App\Option;
+use App\Revisions\MakeRevision;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\PhpWord;
@@ -108,7 +109,7 @@ class EvaluationController extends Controller
 
     public function get(Request $request)
     {
-        $page = (int) $request->get('page');
+        $page = (int)$request->get('page');
         $take = 10;
         $skip = ($page - 1) * $take;
 
@@ -119,7 +120,7 @@ class EvaluationController extends Controller
             'evaluations' => $evaluations,
             'records' => $count,
             'message' => "page: $page take: $take skip: $skip count: $count",
-            ];
+        ];
     }
 
     public function getOne(Request $request)
@@ -238,7 +239,8 @@ class EvaluationController extends Controller
         return $path;
     }
 
-    public function clone(Request $request){
+    public function clone(Request $request)
+    {
         $eval = $this->getOne($request);
 
         $saved_eval = $eval->replicate();
@@ -246,7 +248,7 @@ class EvaluationController extends Controller
         $saved_eval->items = [];
         $saved_eval->save();
 
-        foreach($eval->items AS $item) {
+        foreach ($eval->items as $item) {
             Item::create([
                 'name' => $item->name,
                 'time' => $item->time,
@@ -259,10 +261,15 @@ class EvaluationController extends Controller
         }
     }
 
-    /**
-     * @param int $evaluationId
-     */
-    public function revision(int $evaluationId  = 0){
+    public function revision(int $id = 0)
+    {
+        $eval = Evaluation::findOrFail($id);
+        $maker = new MakeRevision($eval);
+
+        if($maker->make()){
+            return 'created';
+        }
+
         return $evaluationId;
     }
 }

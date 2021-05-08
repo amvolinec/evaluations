@@ -361,6 +361,7 @@ export default {
                 id: this.evald,
                 diff: diff,
                 items: this.revals,
+                options: this.options
             }).then((r) => {
                 console.log(r.data);
             }).catch((error) => {
