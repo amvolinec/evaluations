@@ -26,6 +26,8 @@
                                 <th scope="col">{{ __("Name") }}</th>
 								<th scope="col">{{ __("Description") }}</th>
 								<th scope="col">{{ __("Time") }}</th>
+								<th scope="col">{{ __("Average") }}</th>
+								<th scope="col">{{ __("Count") }}</th>
 
                                 <th scope="col" style="width: 100px;">{{ __('Actions') }}</th>
                             </tr>
@@ -37,6 +39,8 @@
                                     <td>{{ $step->name }}</td>
 									<td>{{ $step->description }}</td>
 									<td>{{ $step->time }}</td>
+									<td>{{ $step->average > 0 ? $step->average : $step->time }}</td>
+									<td>{{ $step->count }}</td>
 
                                     <td>
                                         <form class="float-right" action="{{ route('step.destroy', $step->id) }}"

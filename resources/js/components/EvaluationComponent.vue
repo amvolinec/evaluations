@@ -123,7 +123,7 @@ export default {
             steps.forEach(function (e) {
                 if (e.selected) {
                     e.selected = false;
-                    let point = {name: e.name, time: e.time, step_id: e.id, group_id: e.group_id};
+                    let point = {name: e.name, time: e.average === 0 ? e.time : e.average, step_id: e.id, group_id: e.group_id};
                     revals.push(point);
                 }
             });

@@ -215,3 +215,13 @@ input, textarea {
 .form-control-sm {
     font-size: $font-size-base;
 }
+
+.with-btn .form-control-sm {
+    width: calc(100% - 56px);
+}
+
+#bbtn {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+}

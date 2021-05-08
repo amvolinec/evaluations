@@ -12,7 +12,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header">2. {{ __('Groups') }}</div>
+                <div class="card-header">2. {{ __('Tasks') }}</div>
                 <div class="card-body">
                     <tasks></tasks>
                 </div>
