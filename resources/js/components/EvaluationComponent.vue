@@ -40,13 +40,28 @@
                         </div>
                     </draggable>
 
-<!--                    <div v-if="time > 0" class="span-time">-->
-<!--                        <label> Time (min): </label>-->
-<!--                        <input class="step-time" type="text" v-model="time" disabled>-->
-<!--                    </div>-->
+                    <div class="d-flex flex-row m-4">
 
-                    <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span
-                        class="total-time" v-text="time"></span> h.
+                        <div class="btn-group p-2">
+                            <button class="btn btn-sm btn-outline-secondary p-2"><i class="fa fa-calculator"
+                                                                                    v-on:click="showPopup"
+                                                                                    aria-hidden="true"></i></button>
+                        </div>
+
+                        <div class="p-2"><span class="total-time"></span> Total time:</div>
+                        <div class="p-2" v-if="!popup"><span class="total-time" v-text="time"></span> h.</div>
+                        <div class="p-2" v-if="popup"><input class="form-control-sm" type="text" v-model="timeTemp">
+                        </div>
+
+                        <div class="btn-group p-2">
+                            <button class="btn btn-sm btn-success" v-if="popup" @click="recalc"><i
+                                class="fa fa-floppy-o"
+                                aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary" v-if="popup" v-on:click="popup = false">
+                                <i class="fa fa-undo" aria-hidden="true"></i></button>
+                        </div>
+
                     </div>
 
                     <div class="mt-3" v-if="message.length > 0">
@@ -112,6 +127,8 @@ export default {
             evalDate: '',
             evalClient: 'Telia',
             message: '',
+            popup: false,
+            timeTemp: 0,
         }
     },
     created() {
@@ -123,7 +140,12 @@ export default {
             steps.forEach(function (e) {
                 if (e.selected) {
                     e.selected = false;
-                    let point = {name: e.name, time: e.average === 0 ? e.time : e.average, step_id: e.id, group_id: e.group_id};
+                    let point = {
+                        name: e.name,
+                        time: e.average === 0 ? e.time : e.average,
+                        step_id: e.id,
+                        group_id: e.group_id
+                    };
                     revals.push(point);
                 }
             });
@@ -254,9 +276,13 @@ export default {
             }).catch((error) => {
                 this.$root.fetchError(error);
             });
-        }
-    },
-    computed: {
+        }, showPopup() {
+            this.popup = true;
+            this.timeTemp = this.time;
+        }, recalc() {
+            this.popup = false;
+        },
+    }, computed: {
         // revals: {
         //     get() {
         //         return this.$store.state.revals;
