@@ -44,8 +44,8 @@
 
                         <div class="btn-group p-2">
                             <button class="btn btn-sm btn-outline-success p-2"><i class="fa fa-calculator"
-                                                                                    v-on:click="showPopup"
-                                                                                    aria-hidden="true"></i></button>
+                                                                                  v-on:click="showPopup"
+                                                                                  aria-hidden="true"></i></button>
                         </div>
 
                         <div class="p-2"><span class="total-time"></span> Total time:</div>
@@ -77,19 +77,52 @@
                 <div class="col-md-12">
                     <h5 class="text-center m-1">Inquiry</h5>
 
-                    <div class="m-2">
-                        <button class="btn btn-sm btn-outline-success" @click="addOption"><i class="fa fa-plus"
-                                                                                     aria-hidden="true"></i></button>
+                    <div class="btm-group m-2">
+                        <button class="btn btn-sm btn-outline-success" v-on:click="editOption=true;isSaved=false"><i
+                            class="fa fa-plus"
+                            aria-hidden="true"></i></button>
+                        <button class="btn btn-sm btn-success" v-if="editOption" @click="onChanged"><i
+                            class="fa fa-floppy-o"
+                            aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary" v-if="editOption" v-on:click="editOption = false">
+                            <i class="fa fa-undo" aria-hidden="true"></i></button>
                     </div>
 
-                    <div class="group-line no-border" v-for="option in options">
-                        <textarea class="form-control eval-text" type="text" v-model="option.name" rows="5"
-                                  @change="onChanged"
+                    <div class="group-line no-border">
+                        <ol>
+                            <li v-for="option in options">
+                                <span v-if="!option.edit">{{ option.name }}</span>
+                                <textarea class="form-control eval-text" type="text" v-if="option.edit"
+                                          v-model="option.name"
+                                          rows="5"></textarea>
+                                <button class="btn btn-sm btn-outline-secondary" v-if="!option.edit"
+                                        @click="option.edit=true"><i
+                                    class="fa fa-pencil"
+                                    aria-hidden="true"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" v-if="!option.edit"
+                                        @click="deleteOption(option)"><i
+                                    class="fa fa-trash-o"
+                                    aria-hidden="true"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" v-if="option.edit" @click="option.edit=false"><i
+                                    class="fa fa-floppy-o"
+                                    aria-hidden="true"></i>
+                                </button>
+
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control eval-text" type="text" v-if="editOption" v-model="newOption"
+                                  rows="5"
                                   oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
                     </div>
 
                     <div class="mt-3 ml-3" v-if="time > 0">
-                        <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit == false"><i
+                        <button class="btn btn-sm btn-success" @click="storeEvaluation" v-if="edit===false"><i
                             class="fa fa-floppy-o" aria-hidden="true"></i> Save Evaluation
                         </button>
                         <button class="btn btn-sm btn-success" @click="updateEvaluation" v-if="edit"><i
@@ -133,6 +166,8 @@ export default {
             message: '',
             popup: false,
             timeTemp: 0,
+            newOption: '',
+            editOption: false
         }
     },
     created() {
@@ -171,7 +206,7 @@ export default {
     },
     methods: {
         addOption() {
-            this.options.push({name: ''});
+            this.options.push({name: '', edit: false});
             this.isSaved = false;
         },
         storeEvaluation() {
@@ -274,6 +309,8 @@ export default {
         },
         onChanged: function (event) {
             this.isSaved = false;
+            this.options.push({name: this.newOption});
+            this.newOption = '';
         }, itemClone() {
             axios.post('/clone/', {'id': this.evald, 'options': this.options, 'items': this.revals}).then(r => {
                 console.log(r.data);
@@ -289,7 +326,7 @@ export default {
             let newVal = 0;
             let sign = this.timeTemp.substring(0, 1);
             let oldVal = parseInt(this.time);
-            if ( sign === '+' || sign === '-') {
+            if (sign === '+' || sign === '-') {
                 newVal = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
 
                 newVal = oldVal + (newVal * 0.01 * oldVal)
@@ -298,7 +335,17 @@ export default {
             }
 
             console.log('new value ' + newVal + ' sign ' + sign);
-        },
+        }, deleteOption(option) {
+            let result = confirm("Do you really want to delete: " + option.name.substring(0, 50) + "... ?");
+            if (result === false) {
+                return false;
+            }
+            const index = this.options.indexOf(option);
+            if (index > -1) {
+                this.options.splice(index, 1);
+            }
+            this.isSaved = false;
+        }
     }, computed: {
         // revals: {
         //     get() {

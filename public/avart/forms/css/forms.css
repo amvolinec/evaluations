@@ -1,0 +1,45 @@
+.sidebar {
+    position: fixed;
+    padding: 16px;
+    width: 220px;
+    height: 100%;
+    font-size: 1rem;
+    background-color: #1b1e21;
+    color: #fafafa !important;
+}
+
+.with-sidebar {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+}
+
+.side-menu a {
+    color: #c8c8c8 !important;
+}
+
+.side-menu a:hover {
+    text-decoration: none;
+    color: #ffffff !important;
+}
+
+.side-menu li {
+    line-height: 2rem;
+}
+
+.table {
+    color: #535353;
+}
+
+.btn {
+    border: none;
+}
+
+.form-inner .form-control {
+    height: calc(1.6em + 0.5rem + 2px);
+    padding: 0.375rem 0.3rem;
+    font-size: 0.9rem;
+}
+
+.form-inner .form-group {
+    margin-bottom: .5rem;
+}
