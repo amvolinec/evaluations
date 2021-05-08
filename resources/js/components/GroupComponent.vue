@@ -2,7 +2,7 @@
     <div class="list-groups" id="groups">
 
         <div id="bbtn" class="form-group">
-            <button class="btn btn-sm btn-outline-success" v-if="!add" v-on:click="add = !add">+</button>
+            <button class="btn btn-sm btn-outline-success" v-if="!add" v-on:click="add = !add"><i aria-hidden="true" class="fa fa-plus"></i></button>
         </div>
 
         <div class="form-group with-btn" v-if="add">

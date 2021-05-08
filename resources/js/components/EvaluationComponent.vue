@@ -43,7 +43,7 @@
                     <div class="d-flex flex-row mt-3">
 
                         <div class="btn-group p-2">
-                            <button class="btn btn-sm btn-outline-secondary p-2"><i class="fa fa-calculator"
+                            <button class="btn btn-sm btn-outline-success p-2"><i class="fa fa-calculator"
                                                                                     v-on:click="showPopup"
                                                                                     aria-hidden="true"></i></button>
                         </div>
@@ -78,7 +78,7 @@
                     <h5 class="text-center m-1">Inquiry</h5>
 
                     <div class="m-2">
-                        <button class="btn btn-sm btn-success" @click="addOption"><i class="fa fa-plus"
+                        <button class="btn btn-sm btn-outline-success" @click="addOption"><i class="fa fa-plus"
                                                                                      aria-hidden="true"></i></button>
                     </div>
 

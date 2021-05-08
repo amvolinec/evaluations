@@ -2,7 +2,7 @@
     <div class="list-steps" id="steps">
 
         <div id="bbtn" class="form-group" v-if="!add && !edit">
-            <button class="btn btn-sm btn-outline-success" v-on:click="add = !add">+</button>
+            <button class="btn btn-sm btn-outline-success" v-on:click="add = !add"><i aria-hidden="true" class="fa fa-plus"></i></button>
 <!--            <input class="form-control-sm" type="text" v-model="search" v-on:keyup="findElements">-->
         </div>
 
