@@ -29,5 +29,6 @@
     "Date": "Data",
     "Client": "Klientas",
     "Dump": "Duomenų archyvavimas",
-    "Time": "Laikas"
+    "Time": "Laikas",
+    "Step": "Žingsnis"
 }

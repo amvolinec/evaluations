@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {
+    Route::resource('revision', 'RevisionController');
+    Route::post('revision/find/', 'RevisionController@find')->name('revision.find');
+    Route::get('revision/find/{string}', 'RevisionController@find')->name('revision.find.get');
 
     Route::resource('task', 'TaskController');
     Route::post('task/find/', 'TaskController@find')->name('task.find');

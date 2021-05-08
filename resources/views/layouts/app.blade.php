@@ -69,6 +69,7 @@
                                     <hr>
                                     <a class="dropdown-item" href="{{ route('group.index') }}">{{ __('Groups') }}</a>
                                     <a class="dropdown-item" href="{{ route('task.index') }}">{{ __('Tasks') }}</a>
+                                    <a class="dropdown-item" href="{{ route('step.index') }}">{{ __('Step') }}</a>
                                     <hr>
                                     <a class="dropdown-item" href="/av-panel">{{ __('Admin Panel') }}</a>
                                     <hr>
