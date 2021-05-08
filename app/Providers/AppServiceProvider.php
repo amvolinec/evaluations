@@ -30,10 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Evaluation::observe(EvaluationObserver::class);
 
-//        View::composer('partials.groups.select', function ($view) {
-//            $view->with('groups', Group::orderBy('name', 'asc')->get());
-//        });
-
         View::composer('partials.groups.*',GroupsComposer::class);
     }
 }
