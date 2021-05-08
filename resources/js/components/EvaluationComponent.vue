@@ -40,7 +40,7 @@
                         </div>
                     </draggable>
 
-                    <div class="d-flex flex-row m-4">
+                    <div class="d-flex flex-row mt-3">
 
                         <div class="btn-group p-2">
                             <button class="btn btn-sm btn-outline-secondary p-2"><i class="fa fa-calculator"
@@ -62,6 +62,10 @@
                                 <i class="fa fa-undo" aria-hidden="true"></i></button>
                         </div>
 
+                    </div>
+
+                    <div v-if="popup" class="ml-4 mb-3">
+                        <small>change the value or specify a percentage change ( +10% ; -20% )</small>
                     </div>
 
                     <div class="mt-3" v-if="message.length > 0">
@@ -281,6 +285,19 @@ export default {
             this.timeTemp = this.time;
         }, recalc() {
             this.popup = false;
+            this.timeTemp = this.timeTemp.trim();
+            let newVal = 0;
+            let sign = this.timeTemp.substring(0, 1);
+            let oldVal = parseInt(this.time);
+            if ( sign === '+' || sign === '-') {
+                newVal = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
+
+                newVal = oldVal + (newVal * 0.01 * oldVal)
+            } else {
+                newVal = parseInt(this.timeTemp);
+            }
+
+            console.log('new value ' + newVal + ' sign ' + sign);
         },
     }, computed: {
         // revals: {
