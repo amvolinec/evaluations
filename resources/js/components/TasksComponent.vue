@@ -1,5 +1,5 @@
 <template>
-    <div class="list-tasks" id="tasks">
+    <div class="list-tasks" id="tasks" v-if="tasks.length > 0">
         <div class="form-group">
             <input class="form-control-sm" type="text" v-model="taskToAdd">
             <input type="hidden" v-model="group">

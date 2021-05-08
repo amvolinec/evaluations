@@ -65,7 +65,6 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @if(Auth::user()->hasRole('super-admin'))
-                                    <a class="dropdown-item" href="{{ route('user.index') }}">{{ __('Users') }}</a>
                                     <a class="dropdown-item" href="{{ route('dump') }}">{{ __('Dump') }}</a>
                                     <hr>
                                 @endif

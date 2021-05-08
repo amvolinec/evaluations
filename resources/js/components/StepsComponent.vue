@@ -1,5 +1,5 @@
 <template>
-    <div class="list-steps" id="steps">
+    <div class="list-steps" id="steps" v-if="steps.length > 0">
         <div v-if="task > 0" id="steps-outer">
 
             <div class="form-group" v-if="edit == false">
