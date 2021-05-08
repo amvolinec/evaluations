@@ -1,7 +1,7 @@
 <template>
 
     <div class="card" v-bind:class="{ saved: isSaved }" id="evals">
-        <div class="card-header">Evaluation</div>
+        <div class="card-header">4. Evaluation</div>
         <div class="card-body">
 
             <div class="list-steps row" id="evaluations">
@@ -40,13 +40,32 @@
                         </div>
                     </draggable>
 
-<!--                    <div v-if="time > 0" class="span-time">-->
-<!--                        <label> Time (min): </label>-->
-<!--                        <input class="step-time" type="text" v-model="time" disabled>-->
-<!--                    </div>-->
+                    <div class="d-flex flex-row mt-3">
 
-                    <div class="time-to-add"><i class="fa fa-calculator" aria-hidden="true"></i> Total time: <span
-                        class="total-time" v-text="time"></span> h.
+                        <div class="btn-group p-2">
+                            <button class="btn btn-sm btn-outline-success p-2"><i class="fa fa-calculator"
+                                                                                    v-on:click="showPopup"
+                                                                                    aria-hidden="true"></i></button>
+                        </div>
+
+                        <div class="p-2"><span class="total-time"></span> Total time:</div>
+                        <div class="p-2" v-if="!popup"><span class="total-time" v-text="time"></span> h.</div>
+                        <div class="p-2" v-if="popup"><input class="form-control-sm" type="text" v-model="timeTemp">
+                        </div>
+
+                        <div class="btn-group p-2">
+                            <button class="btn btn-sm btn-success" v-if="popup" @click="recalc"><i
+                                class="fa fa-floppy-o"
+                                aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary" v-if="popup" v-on:click="popup = false">
+                                <i class="fa fa-undo" aria-hidden="true"></i></button>
+                        </div>
+
+                    </div>
+
+                    <div v-if="popup" class="ml-4 mb-3">
+                        <small>change the value or specify a percentage change ( +10% ; -20% )</small>
                     </div>
 
                     <div class="mt-3" v-if="message.length > 0">
@@ -59,7 +78,7 @@
                     <h5 class="text-center m-1">Inquiry</h5>
 
                     <div class="m-2">
-                        <button class="btn btn-sm btn-success" @click="addOption"><i class="fa fa-plus"
+                        <button class="btn btn-sm btn-outline-success" @click="addOption"><i class="fa fa-plus"
                                                                                      aria-hidden="true"></i></button>
                     </div>
 
@@ -112,6 +131,8 @@ export default {
             evalDate: '',
             evalClient: 'Telia',
             message: '',
+            popup: false,
+            timeTemp: 0,
         }
     },
     created() {
@@ -123,7 +144,12 @@ export default {
             steps.forEach(function (e) {
                 if (e.selected) {
                     e.selected = false;
-                    let point = {name: e.name, time: e.time, step_id: e.id, group_id: e.group_id};
+                    let point = {
+                        name: e.name,
+                        time: e.average === 0 ? e.time : e.average,
+                        step_id: e.id,
+                        group_id: e.group_id
+                    };
                     revals.push(point);
                 }
             });
@@ -254,9 +280,26 @@ export default {
             }).catch((error) => {
                 this.$root.fetchError(error);
             });
-        }
-    },
-    computed: {
+        }, showPopup() {
+            this.popup = true;
+            this.timeTemp = this.time;
+        }, recalc() {
+            this.popup = false;
+            this.timeTemp = this.timeTemp.trim();
+            let newVal = 0;
+            let sign = this.timeTemp.substring(0, 1);
+            let oldVal = parseInt(this.time);
+            if ( sign === '+' || sign === '-') {
+                newVal = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
+
+                newVal = oldVal + (newVal * 0.01 * oldVal)
+            } else {
+                newVal = parseInt(this.timeTemp);
+            }
+
+            console.log('new value ' + newVal + ' sign ' + sign);
+        },
+    }, computed: {
         // revals: {
         //     get() {
         //         return this.$store.state.revals;

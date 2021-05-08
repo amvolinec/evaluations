@@ -86,7 +86,12 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        $group->fill($request->except('_method', '_token'))->save();
+        if ($request->ajax()) {
+
+        } else {
+            $group->fill($request->all())->save();
+        }
+
         return redirect()->route('group.index');
     }
 

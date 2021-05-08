@@ -7,8 +7,8 @@
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
                 <th scope="col">Client</th>
-                <th scope="col" width="10%">Time</th>
-                <th scope="col" width="20%">Actions</th>
+                <th scope="col" width="90">Time</th>
+                <th scope="col" width="140">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -17,7 +17,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.date }}</td>
                 <td>{{ item.client }}</td>
-                <td>{{ sumTimes(item.items) }} val.</td>
+                <td class="text-right">{{ sumTimes(item.items) }} val.</td>
                 <td>
                     <button class="btn btn-sm btn-outline-secondary" @click="itemLoad(item)"><i
                         class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
@@ -32,6 +32,7 @@
             </tr>
             </tbody>
         </table>
+        <pagination v-model="page" :records="records" :per-page="10" :options="options" @paginate="fetchItems"/>
     </div>
 </template>
 
@@ -40,6 +41,9 @@ export default {
     data() {
         return {
             items: [],
+            page: 1,
+            records: 0,
+            options: { theme: 'bootstrap4' }
         }
     },
     created() {
@@ -48,14 +52,14 @@ export default {
     mounted() {
         Echo.channel('new-eval')
             .listen('NewEvaluation', (e) => {
-                console.log(e);
                 this.items = e.evaluations;
             });
     },
     methods: {
         fetchItems() {
-            axios.get('/evaluations').then(response => {
-                this.items = response.data;
+            axios.get('/evaluations/?page=' + this.page).then(r => {
+                this.items = r.data.evaluations;
+                this.records = r.data.records;
             }).catch((error) => {
                 this.$root.fetchError(error);
             });

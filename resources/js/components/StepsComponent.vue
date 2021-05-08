@@ -1,48 +1,67 @@
 <template>
     <div class="list-steps" id="steps">
-        <div v-if="task > 0" id="steps-outer">
 
-            <div class="form-group" v-if="edit == false">
+        <div id="bbtn" class="form-group" v-if="!add && !edit">
+            <button class="btn btn-sm btn-outline-success" v-on:click="add = !add"><i aria-hidden="true" class="fa fa-plus"></i></button>
+<!--            <input class="form-control-sm" type="text" v-model="search" v-on:keyup="findElements">-->
+        </div>
+
+        <div v-if="add || edit" id="steps-outer" class="mb-2">
+
+            <div class="form-group" v-if="edit === false" style="margin-bottom: 0">
                 <div class="inline mb-2" style="width: calc(100% + 30px);">
                     <input class="form-control-sm" type="text" v-model="stepToAdd" placeholder="Name"
                            @keyup="findStep($event)">
 
                     <div class="drop-box" v-if="temps.length > 0 && !escaped">
-
                         <div class="group-line down-item" v-for="temp in temps" @click="selectTemplate(temp)"
-                             v-bind:temp-id="temp.id">{{ temp.name }} ({{ temp.time }} val.)
+                             v-bind:temp-id="temp.id">{{ temp.name }} {{ temp.time }}-{{ temp.average }}h
                         </div>
                     </div>
+
+                </div>
+
+                <input type="text" v-model="timeToAdd" placeholder="Time: 1d:1h" @keyup="checkTime"
+                       @focusout="escaped=false" v-bind:class="{ 'toggle-valid': timeValid }">
+
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-success" @click="addStep"><i class="fa fa-floppy-o"
+                                                                               aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-sm btn-secondary" v-on:click="add = false; escaped = false"><i class="fa fa-undo"
+                                                                                         aria-hidden="true"></i>
+                    </button>
                 </div>
 
             </div>
-        </div>
 
-        <input type="text" v-model="timeToAdd" placeholder="Time: 1d:1h" @keyup="checkTime"
-               @focusout="escaped=false" v-bind:class="{ 'toggle-valid': timeValid }">
-        <button class="btn btn-sm btn-success" @click="addStep"><i class="fa fa-floppy-o" aria-hidden="true"></i>
-        </button>
+            <div class="form-group" v-if="edit === true">
+                <input type="hidden" v-model="stepEdit.id">
+                <input type="text" v-model="stepEdit.name" placeholder="Name">
+                <input type="number" v-model="stepEdit.time" placeholder="Time (min)">
 
-        <div class="form-group" v-if="edit == true">
-            <input type="hidden" v-model="stepEdit.id">
-            <input type="text" v-model="stepEdit.name" placeholder="Name">
-            <input type="number" v-model="stepEdit.time" placeholder="Time (min)">
-            <button class="btn btn-sm btn-success" @click="saveStep"><i class="fa fa-floppy-o"
-                                                                        aria-hidden="true"></i> Save Step
-            </button>
-        </div>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-success" @click="saveStep"><i class="fa fa-floppy-o"
+                                                                                aria-hidden="true"></i> Save Step
+                    </button>
+                    <button class="btn btn-sm btn-secondary" v-on:click="edit = false"><i class="fa fa-undo"
+                                                                                          aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
 
-        <span v-if="time > 0" class="span-time">
-            <label>Time (min): </label>
+            <span v-if="time > 0" class="span-time">
+            <label>Time (h): </label>
             <input class="step-time" type="text" v-model="time" disabled>
         </span>
 
-        <div class="steps-inner">
+        </div>
+
+        <div class="steps-inner" v-on:click="add = false">
             <div class="group-line" v-for="step in steps">
                 <div>
                     <div class="group-text" v-bind:class="{ 'toggle-item': step.selected }"
-                         @click="changeStep(step, $event)" v-bind:tesk-id="step.id">{{ step.name }} ({{ step.time }}
-                        val.)
+                         @click="changeStep(step, $event)" v-bind:tesk-id="step.id">{{ step.name }} {{ step.time }}-{{ step.average > 0 ? step.average : step.time }}h
                     </div>
                     <button class="btn btn-sm btn-outline-secondary" @click="editStep(step)" v-bind:step-id="step.id">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -63,7 +82,7 @@
             </button>
         </div>
 
-        <div v-if="task == 0">Select Task first...</div>
+        <div v-if="task === 0"><small>Select Task first...</small></div>
     </div>
 </template>
 
@@ -82,6 +101,9 @@ export default {
             stepToAdd: '',
             timeToAdd: '',
             stepEdit: {},
+            add: false,
+            find: false,
+            search: '',
         }
     },
     created() {
@@ -203,6 +225,8 @@ export default {
             this.stepToAdd = '';
             this.temps = [];
             this.escaped = false;
+        }, findElements() {
+            console.log(this.search)
         }
     }
 }

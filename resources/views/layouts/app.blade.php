@@ -27,7 +27,7 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container-fluid header-outer">
+        <div class="container header-outer">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <img class="logo-image" src="{{ asset('images/logo.png') }}" alt="{{ env('APP_NAME') }}">
             </a>
@@ -65,7 +65,13 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @if(Auth::user()->hasRole('super-admin'))
-{{--                                    <a class="dropdown-item" href="{{ route('user.index') }}">{{ __('Users') }}</a>--}}
+                                    <a class="dropdown-item" href="{{ route('dump') }}">{{ __('Dump') }}</a>
+                                    <hr>
+                                    <a class="dropdown-item" href="{{ route('group.index') }}">{{ __('Groups') }}</a>
+                                    <a class="dropdown-item" href="{{ route('task.index') }}">{{ __('Tasks') }}</a>
+                                    <a class="dropdown-item" href="{{ route('step.index') }}">{{ __('Step') }}</a>
+                                    <hr>
+                                    <a class="dropdown-item" href="/av-panel">{{ __('Admin Panel') }}</a>
                                     <hr>
                                 @endif
 

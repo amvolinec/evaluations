@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -10,7 +10,7 @@
                             <form action="{{ route('task.create') }}">
                                 @method('post')
                                 @csrf
-                                <button class="btn btn-success">+</button>
+                                <button class="btn btn-success"><i aria-hidden="true" class="fa fa-plus"></i></button>
                             </form>
                         </div>
                         <div class="d-inline-block" style="vertical-align: top; padding: 6px;">
@@ -25,7 +25,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">{{ __("Name") }}</th>
 								<th scope="col">{{ __("Description") }}</th>
-								<th scope="col">{{ __("Selected") }}</th>
+{{--								<th scope="col">{{ __("Selected") }}</th>--}}
 								<th scope="col">{{ __("Position") }}</th>
 								<th scope="col">{{ __("Group") }}</th>
 
@@ -38,7 +38,7 @@
                                     <th scope="row">{{ $task->id  }}</th>
                                     <td>{{ $task->name }}</td>
 									<td>{{ $task->description }}</td>
-									<td>{{ $task->selected }}</td>
+{{--									<td>{{ $task->selected }}</td>--}}
 									<td>{{ $task->position }}</td>
                                     <td>{{ $task->group->name ?? '' }}</td>
                                     <td>
@@ -46,10 +46,10 @@
                                               method="post" onsubmit="return confirm('Do you really want to delete?');">
                                             @method('delete')
                                             @csrf
-                                            <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa fa-trash"></i></button>
                                         </form>
                                         <a class="btn btn-sm btn-outline-success float-right" style="margin: 0 8px;"
-                                           href="{{ route('task.edit', $task->id) }}"><i class="fas fa-edit"></i></a>
+                                           href="{{ route('task.edit', $task->id) }}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
