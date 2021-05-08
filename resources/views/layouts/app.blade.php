@@ -27,7 +27,7 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container-fluid header-outer">
+        <div class="container header-outer">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <img class="logo-image" src="{{ asset('images/logo.png') }}" alt="{{ env('APP_NAME') }}">
             </a>
