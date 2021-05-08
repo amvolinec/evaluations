@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('evaluations', 'EvaluationController@get');
 
     Route::post('evaluations/get/', 'EvaluationController@getOne');
+    Route::post('evaluations/revision/{evaluationId}', 'EvaluationController@revision');
 
     Route::post('export/{id}','EvaluationController@export');
     Route::post('steps/find/', 'StepController@find');

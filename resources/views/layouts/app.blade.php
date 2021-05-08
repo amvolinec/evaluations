@@ -29,7 +29,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container header-outer">
             <a class="navbar-brand" href="{{ route('home') }}">
-                <img class="logo-image" src="{{ asset('images/logo.png') }}" alt="{{ env('APP_NAME') }}">
+                <img class="logo-image" src="{{ asset('images/logo100.png') }}" alt="{{ env('APP_NAME') }}">
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -165,7 +165,7 @@ export default {
             evalClient: 'Telia',
             message: '',
             popup: false,
-            timeTemp: 0,
+            timeTemp: "",
             newOption: '',
             editOption: false
         }
@@ -326,24 +326,47 @@ export default {
             let newVal = 0;
             let sign = this.timeTemp.substring(0, 1);
             let oldVal = parseInt(this.time);
+
             if (sign === '+' || sign === '-') {
                 newVal = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
-
                 newVal = oldVal + (newVal * 0.01 * oldVal)
             } else {
                 newVal = parseInt(this.timeTemp);
             }
 
+            this.createRevision(newVal - oldVal);
+
             console.log('new value ' + newVal + ' sign ' + sign);
         }, deleteOption(option) {
+
             let result = confirm("Do you really want to delete: " + option.name.substring(0, 50) + "... ?");
+
             if (result === false) {
                 return false;
             }
+
             const index = this.options.indexOf(option);
+
             if (index > -1) {
                 this.options.splice(index, 1);
             }
+
+            this.isSaved = false;
+
+        }, createRevision(diff) {
+
+            if (diff === 0) return false;
+
+            axios.post('/evaluations/revision/' + this.evald, {
+                id: this.evald,
+                diff: diff,
+                items: this.revals,
+            }).then((r) => {
+                console.log(r.data);
+            }).catch((error) => {
+                this.$root.fetchError(error);
+            });
+
             this.isSaved = false;
         }
     }, computed: {
