@@ -2,113 +2,97 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
-use App\Step;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 use App\Http\Requests\AssociateRequest;
 use App\Http\Requests\StepRequest;
+use App\Step;
+use App\Task;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class StepController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return Response
      */
     public function index()
     {
-        $steps = Step::paginate(20);
-        return view('step.index', ['steps' => $steps]);
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return Response
      */
     public function create()
     {
-        return view('step.create',['groups' => Group::all()]);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StepRequest $request
-     * @return RedirectResponse
+     * @param \Illuminate\Http\Request $request
+     * @return Response
      */
     public function store(StepRequest $request)
     {
-        if ($request->ajax()) {
-            $task_id = $request->get('task_id');
-            $step = Step::create($request->except('task_id'));
-            $step->tasks()->attach($task_id);
+        $task_id = $request->get('task_id');
+        $step = Step::create($request->except('task_id'));
+        $step->tasks()->attach($task_id);
 
-            return $this->getStepsByTaskId($task_id);
-        } else {
-
-            Step::create($request->except('_method', '_token'));
-
-        }
-        return redirect()->route('step.index');
+        return $this->getStepsByTaskId($task_id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  $id
-     * @return View
+     * @param \App\Step $step
+     * @return Response
      */
-    public function show($id)
+    public function show(Step $step)
     {
-        return view('step.index', ['steps' => Step::where('id', $id)->paginate(),'group' => \App\Group::all()]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Step  $step
-     * @return View
+     * @param \App\Step $step
+     * @return Response
      */
     public function edit(Step $step)
     {
-        return view ('step.create' , ['step' => $step,'groups' => Group::all()]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  Step  $step
-     * @return RedirectResponse
+     * @param StepRequest $request
+     * @param \App\Step $step
+     * @return Response
      */
     public function update(Request $request, Step $step)
     {
-        if ($request->ajax()) {
-            $step->name = $request->get('name');
-            $step->time = $request->get('time');
-            $step->save();
-            return response()->json($step);
-        } else {
-            $step->fill($request->except('_method', '_token'))->save();
-
-        }
-        return redirect()->route('step.index');
+        $step->name = $request->get('name');
+        $step->time = $request->get('time');
+        $step->save();
+        return response()->json($step);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Step  $step
-     * @return RedirectResponse
+     * @param \App\Step $step
+     * @return Response
      */
     public function destroy(Step $step)
     {
-        $step->delete();
-        return redirect()->route('step.index');
+        //
     }
 
     public function associate(AssociateRequest $request)
@@ -117,21 +101,10 @@ class StepController extends Controller
         return response()->json('Associated');
     }
 
-    public function find(Request $request, $search = false)
+    public function find(Request $request)
     {
-        if ($request->ajax()) {
-            $name = "%$request->name%";
-            return Step::where('name', 'like', $name)->orderBy('name')->take(10)->get();
-        } else {
-            $string = $search ?? $request->get('string');
-            $data = Step::where('name', 'like', '%' . $string . '%');
-
-            if ($search !== false && !empty($search)) {
-                return view('step.index', ['steps' => $data->paginate(20), 'search' => $string]);
-            } else {
-                return $data->take(10)->get();
-            }
-        }
+        $name = "%$request->name%";
+        return Step::where('name', 'like', $name)->orderBy('name')->take(10)->get();
     }
 
     public function get($task_id)

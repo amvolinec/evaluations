@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Create') }} {{ __('Task') }}</div>
 
@@ -86,10 +86,10 @@
                             <div class="col-md-6">
                                 @if(isset($task))
                                 <button class="btn btn-outline-success" type="submit">
-                                    <i class="far fa-save"></i> {{ __('Update') }}</button>
+                                    <i class="fa fa-save"></i> {{ __('Update') }}</button>
                                 @else
                                 <button class="btn btn-outline-success" type="submit">
-                                    <i class="far fa-save"></i> {{ __('Save') }}</button>
+                                    <i class="fa fa-save"></i> {{ __('Save') }}</button>
                                 @endif
                             </div>
                         </div>

@@ -67,6 +67,11 @@
                                 @if(Auth::user()->hasRole('super-admin'))
                                     <a class="dropdown-item" href="{{ route('dump') }}">{{ __('Dump') }}</a>
                                     <hr>
+                                    <a class="dropdown-item" href="{{ route('group.index') }}">{{ __('Groups') }}</a>
+                                    <a class="dropdown-item" href="{{ route('task.index') }}">{{ __('Tasks') }}</a>
+                                    <hr>
+                                    <a class="dropdown-item" href="/av-panel">{{ __('Admin Panel') }}</a>
+                                    <hr>
                                 @endif
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"

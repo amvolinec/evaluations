@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -45,10 +45,10 @@
                                               method="post" onsubmit="return confirm('Do you really want to delete?');">
                                             @method('delete')
                                             @csrf
-                                            <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa fa-trash"></i></button>
                                         </form>
                                         <a class="btn btn-sm btn-outline-success float-right" style="margin: 0 8px;"
-                                           href="{{ route('group.edit', $group->id) }}"><i class="fas fa-edit"></i></a>
+                                           href="{{ route('group.edit', $group->id) }}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
