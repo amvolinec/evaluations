@@ -1,6 +1,7 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
 
 // Variables
 @import 'variables';
@@ -26,7 +27,8 @@ h1, h2, h3, h4, h5 {
 }
 
 input, textarea {
-    font-size: 14px !important;
+    //font-size: $font-size !important;
+    font-weight: $font-weight;
     padding: 2px;
     border-radius: 2px;
     border: 1px solid #e9ecefa6;
@@ -36,17 +38,16 @@ input, textarea {
 .group-line {
     cursor: pointer;
     padding: 0 6px;
-    border-bottom: 1px solid #e9ecef;
-    line-height: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
+    border-bottom: 1px solid #3f9ae51a;
+    /* line-height: 20px; */
 }
 
 .group-text {
     width: calc(100% - 30px);
     display: inline-block;
     vertical-align: baseline;
-    font-size: 14px;
+    //font-size: $font-size;
+    font-weight: $font-weight;
 }
 #steps .group-text {
     width: calc(100% - 62px);
@@ -62,13 +63,13 @@ input, textarea {
     color: #3490dc;
 }
 
-.toggle-item:before {
-    content: "\25CF ";
-    margin-top: -1px;
-    margin-left: -12px;
-    font-size: 16px;
-    color: #2d995b;
-}
+//.toggle-item:before {
+//    content: "\25CF ";
+//    margin-top: -1px;
+//    margin-left: -12px;
+//    font-size: 16px;
+//    color: #2d995b;
+//}
 
 .toggle-valid {
     border: 1px solid #38c172;
@@ -84,6 +85,7 @@ input, textarea {
     font-size: 0.75rem;
     width: 100%;
     text-align: right;
+    font-weight: $font-weight;
 }
 
 .span-time input {
@@ -105,7 +107,7 @@ input, textarea {
 }
 
 .time-to-add {
-    font-size: 14px;
+    //font-size: $font-size;
     margin: 8px;
     color: #2d995b;
     font-weight: 800;
@@ -116,7 +118,8 @@ input, textarea {
 
 .eval-text {
     width: 100%;
-    font-size: 14px;
+    //font-size: $font-size;
+    font-weight: $font-weight;
     margin-bottom: 4px;
     border: 1px solid #e9ecef;
 }
@@ -137,7 +140,7 @@ input, textarea {
 }
 
 .table.table-sm {
-    font-size: 14px;
+    //font-size: $font-size;
 }
 
 .inline {
@@ -160,7 +163,8 @@ input, textarea {
 }
 
 .down-item {
-    font-size: 14px;
+    //font-size: $font-size;
+    font-weight: $font-weight;
 }
 
 span.bold {
@@ -192,4 +196,22 @@ span.bold {
 
 input, textarea {
     border: 1px solid #d3f7d5a6 !important;
+}
+
+.card-body {
+    padding: .75rem;
+}
+
+[class^='col-md'] {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.row {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.form-control-sm {
+    font-size: $font-size-base;
 }

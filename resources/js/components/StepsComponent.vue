@@ -33,7 +33,7 @@
         </div>
 
         <span v-if="time > 0" class="span-time">
-            <label>Time (min): </label>
+            <label>Time (h): </label>
             <input class="step-time" type="text" v-model="time" disabled>
         </span>
 

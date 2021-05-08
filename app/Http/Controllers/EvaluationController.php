@@ -106,9 +106,20 @@ class EvaluationController extends Controller
         return response()->json('Evaluation deleted');
     }
 
-    public function get()
+    public function get(Request $request)
     {
-        return Evaluation::with(['items'])->orderBy('created_at', 'desc')->get();
+        $page = (int) $request->get('page');
+        $take = 10;
+        $skip = ($page - 1) * $take;
+
+        $count = Evaluation::with(['items'])->count();
+        $evaluations = Evaluation::with(['items'])->orderBy('created_at', 'desc')->skip($skip)->take($take)->get();
+
+        return [
+            'evaluations' => $evaluations,
+            'records' => $count,
+            'message' => "page: $page take: $take skip: $skip count: $count",
+            ];
     }
 
     public function getOne(Request $request)

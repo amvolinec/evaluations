@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('clone', 'EvaluationController@clone')->name('eval.clone');
 });
+
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::resource('task', 'TaskController');
     Route::post('task/find/', 'TaskController@find')->name('task.find');

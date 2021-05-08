@@ -5,14 +5,14 @@
         <div class="col-md-12">
 
             <div class="card">
-                <div class="card-header">{{ __('Section') }}</div>
+                <div class="card-header">1. {{ __('Section') }}</div>
                 <div class="card-body">
                     <groups></groups>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-header">{{ __('Groups') }}</div>
+                <div class="card-header">2. {{ __('Groups') }}</div>
                 <div class="card-body">
                     <tasks></tasks>
                 </div>
@@ -23,17 +23,17 @@
 
 </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
 
     <div class="card">
-        <div class="card-header">{{ __('Steps') }}</div>
+        <div class="card-header">3. {{ __('Steps') }}</div>
         <div class="card-body">
             <steps></steps>
         </div>
     </div>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-5">
     <evaluations></evaluations>
 </div>
 
