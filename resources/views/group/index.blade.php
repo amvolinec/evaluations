@@ -13,7 +13,9 @@
                                 <button class="btn btn-success"><i aria-hidden="true" class="fa fa-plus"></i></button>
                             </form>
                         </div>
-                        <div style="padding: 6px; margin: 8px;position: relative;"><h4>{{ __('Groups') }}</h4></div>
+                        <div style="padding: 5px;">
+                            <div style=" margin: 8px 0 0 8px;position: relative;"><h4>{{ __('Groups') }}</h4></div>
+                        </div>
                         <find route="group" fields="name" search="{{ $search ?? '' }}"></find>
                     </div>
                     <div class="card-body">
