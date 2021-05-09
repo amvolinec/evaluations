@@ -23,7 +23,7 @@ class MakeRevision
         $this->evaluation = $evaluation;
 
         if ($new) {
-            $this->evaluation->version = $this->evaluation->last_version->version + 1;
+            $this->evaluation->version = (int) $this->evaluation->last_version->version + 1;
             $this->evaluation->save();
         }
 

@@ -84,9 +84,12 @@ class EvaluationController extends Controller
      * @param \App\Evaluation $evaluation
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Evaluation $eval)
+    public function update(Request $request, $id)
     {
+        $eval = Evaluation::findOrFail($id);
+
         $eval->fill($request->except(['id', 'options', 'items']));
+
         $eval->version = (int)$eval->last_version->version + 1;
         $eval->save();
 
@@ -94,7 +97,11 @@ class EvaluationController extends Controller
             Version::make($eval, false);
         }
 
-        return response()->json(['status' => 'success', 'version' => $eval->version]);
+        return response()->json([
+            'status' => 'success',
+            'version' => $eval->version,
+            'versions' => $this->versions($id),
+        ]);
     }
 
     /**
@@ -139,7 +146,6 @@ class EvaluationController extends Controller
 
     public function versions($id)
     {
-
         return DB::table('revisions')
             ->groupBy('version', 'evaluation_id')
             ->selectRaw('version, sum(time) as sum, evaluation_id')

@@ -1,7 +1,7 @@
 <template>
 
     <div class="card" v-bind:class="{ saved: isSaved }" id="evals">
-        <div class="card-header">4. Evaluation {{ version }}</div>
+        <div class="card-header">4. Evaluation #ID {{ evald  }} v.{{ version }}</div>
         <div class="card-body">
 
             <div class="list-steps row" id="evaluations">
@@ -260,6 +260,7 @@ export default {
 
                     console.log(r.data);
                     this.version = r.data.version;
+                    this.versions = r.data.versions;
 
                 }).catch((error) => {
                     this.$root.fetchError(error);
@@ -440,7 +441,6 @@ export default {
             this.isSaved = false;
 
         }, restore() {
-            // this.storeRevision();
 
             axios.get('/evaluations/' + this.evald + '/revision/' + this.version).then((r) => {
 
