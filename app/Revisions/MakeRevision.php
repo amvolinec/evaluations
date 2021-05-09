@@ -13,13 +13,9 @@ class MakeRevision
 
     private Evaluation $evaluation;
 
-    public function __construct(Evaluation $evaluation)
-    {
+    public function make(Evaluation $evaluation) {
 
         $this->evaluation = $evaluation;
-    }
-
-    public function make() {
 
         foreach ($this->evaluation->items as $item){
             Revision::create([
@@ -36,6 +32,6 @@ class MakeRevision
         $this->evaluation->version ++;
         $this->evaluation->save();
 
-        return true;
+        return ['status' => 'success'];
     }
 }

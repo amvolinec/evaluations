@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 
 class NewEvaluation implements ShouldBroadcast
@@ -17,15 +18,14 @@ class NewEvaluation implements ShouldBroadcast
 
     public $evaluations;
 
-    public $sums;
-
     /**
      * Create a new event instance.
      *
      */
     public function __construct()
     {
-        $this->evaluations = Evaluation::with(['items'])->orderBy('created_at', 'desc')->get()->toArray();
+        $this->evaluations = Evaluation::with(['items'])->orderBy('created_at', 'desc')
+            ->skip(0)->take(10)->get()->toArray();
     }
 
     /**

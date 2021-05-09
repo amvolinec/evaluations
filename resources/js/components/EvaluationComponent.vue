@@ -167,7 +167,9 @@ export default {
             popup: false,
             timeTemp: "",
             newOption: '',
-            editOption: false
+            editOption: false,
+            diff: 0,
+            newTime: 0
         }
     },
     created() {
@@ -289,20 +291,18 @@ export default {
             this.sumTime();
         }, checkData() {
             this.message = '';
-            if (this.$root.$data.task == 0) {
+
+            if (this.$root.$data.task === 0) {
                 this.message += 'Select Task first!\n';
             }
-            if (this.options.length == 0) {
+            if (this.options.length === 0) {
                 this.message += 'Add options!\n';
             }
-            if (this.revals.length == 0) {
+            if (this.revals.length === 0) {
                 this.message += 'Add items!\n';
             }
-            if (this.message.length > 0) {
-                return false;
-            } else {
-                return true;
-            }
+
+            return this.message.length <= 0;
         },
         onUpdate: function (event) {
             // this.revals.splice(event.newIndex, 0, this.revals.splice(event.oldIndex, 1)[0])
@@ -323,20 +323,21 @@ export default {
         }, recalc() {
             this.popup = false;
             this.timeTemp = this.timeTemp.trim();
-            let newVal = 0;
+            this.newTime = 0;
             let sign = this.timeTemp.substring(0, 1);
             let oldVal = parseInt(this.time);
 
             if (sign === '+' || sign === '-') {
-                newVal = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
-                newVal = oldVal + (newVal * 0.01 * oldVal)
+                this.newTime = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
+                this.newTime = oldVal + (this.newTime * 0.01 * oldVal)
             } else {
-                newVal = parseInt(this.timeTemp);
+                this.newTime = parseInt(this.timeTemp);
             }
+            this.diff = this.newTime - oldVal;
 
-            this.createRevision(newVal - oldVal);
+            this.createRevision();
 
-            console.log('new value ' + newVal + ' sign ' + sign);
+            console.log('new value ' + this.newTime + ' sign ' + sign);
         }, deleteOption(option) {
 
             let result = confirm("Do you really want to delete: " + option.name.substring(0, 50) + "... ?");
@@ -353,32 +354,60 @@ export default {
 
             this.isSaved = false;
 
-        }, createRevision(diff) {
+        }, createRevision() {
 
-            if (diff === 0) return false;
+            if (this.diff === 0) return false;
 
             axios.post('/evaluations/revision/' + this.evald, {
                 id: this.evald,
-                diff: diff,
+                diff: this.diff,
                 items: this.revals,
                 options: this.options
             }).then((r) => {
-                console.log(r.data);
+                // console.log(r.data);
+                if (r.data.status === 'success') {
+                    this.resolveDiff();
+                }
+
             }).catch((error) => {
                 this.$root.fetchError(error);
             });
 
             this.isSaved = false;
+
+        }, resolveDiff() {
+
+            if (typeof this.diff !== 'number' || this.diff === 0) {
+                console.log('Error with type diff ' + (typeof this.diff) + ' or diff = 0')
+                return
+            }
+
+            let v = this.diff > 0 ? 1 : -1;
+
+            do {
+                for (let i = 0; i < this.revals.length; i++) {
+
+                    if (this.diff !== 0) {
+
+                        if (i > 0) {
+                            this.revals[i].time += v;
+                            this.diff -= v;
+                        }
+
+                        // console.log('Index: ' + i + ' name: ' + this.revals[i].name + ' time: ' + this.revals[i].time);
+
+                    } else {
+                        this.time = this.newTime
+                        return true;
+                    }
+
+                }
+            }
+            while (this.diff !== 0);
+
+            this.time = this.newTime
+            this.isSaved = false;
         }
-    }, computed: {
-        // revals: {
-        //     get() {
-        //         return this.$store.state.revals;
-        //     },
-        //     set(value) {
-        //         this.$store.commit('updateList', value);
-        //     }
-        // }
-    }
+    }, computed: {}
 }
 </script>

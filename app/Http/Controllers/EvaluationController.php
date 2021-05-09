@@ -7,6 +7,7 @@ use App\Events\NewEvaluation;
 use App\Item;
 use App\Option;
 use App\Revisions\MakeRevision;
+use App\Version;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\PhpWord;
@@ -119,7 +120,6 @@ class EvaluationController extends Controller
         return [
             'evaluations' => $evaluations,
             'records' => $count,
-            'message' => "page: $page take: $take skip: $skip count: $count",
         ];
     }
 
@@ -263,13 +263,15 @@ class EvaluationController extends Controller
 
     public function revision(int $id = 0)
     {
-        $eval = Evaluation::findOrFail($id);
-        $maker = new MakeRevision($eval);
+//        $eval = Evaluation::findOrFail($id);
+//        $maker = new MakeRevision($eval);
+//
+//        if($maker->make()){
+//            return 'created';
+//        }
+//
+//        return $id;
 
-        if($maker->make()){
-            return 'created';
-        }
-
-        return $evaluationId;
+        return Version::make(Evaluation::findOrFail($id));
     }
 }
