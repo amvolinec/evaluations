@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Evaluation;
-use App\Events\NewEvaluation;
 use App\Item;
-use App\Option;
-use App\Revisions\MakeRevision;
+use App\Revision;
 use App\Version;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\PhpWord;
 
@@ -38,7 +37,7 @@ class EvaluationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -50,7 +49,7 @@ class EvaluationController extends Controller
      * Display the specified resource.
      *
      * @param \App\Evaluation $evaluation
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Evaluation $evaluation)
     {
@@ -83,15 +82,19 @@ class EvaluationController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Evaluation $evaluation
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Evaluation $evaluation)
+    public function update(Request $request, Evaluation $eval)
     {
-        $evaluation->fill($request->except(['id', 'options', 'items']));
-        ++$evaluation->version;
-        $evaluation->save();
+        $eval->fill($request->except(['id', 'options', 'items']));
+        $eval->version = (int)$eval->last_version->version + 1;
+        $eval->save();
 
-        return response()->json('Evaluation updated');
+        if (!$eval->isRevisionExist($eval->version)) {
+            Version::make($eval, false);
+        }
+
+        return response()->json(['status' => 'success', 'version' => $eval->version]);
     }
 
     /**
@@ -125,7 +128,23 @@ class EvaluationController extends Controller
 
     public function getOne(Request $request)
     {
-        return Evaluation::where('id', $request->get('id'))->with(['items', 'options'])->first();
+        $id = $request->get('id');
+        $eval = Evaluation::where('id', $id)->with(['items', 'options'])->first();
+
+        return [
+            'eval' => $eval,
+            'versions' => $this->versions($id),
+        ];
+    }
+
+    public function versions($id)
+    {
+
+        return DB::table('revisions')
+            ->groupBy('version', 'evaluation_id')
+            ->selectRaw('version, sum(time) as sum, evaluation_id')
+            ->where('evaluation_id', $id)
+            ->get();
     }
 
     public function export($id)
@@ -263,15 +282,17 @@ class EvaluationController extends Controller
 
     public function revision(int $id = 0)
     {
-//        $eval = Evaluation::findOrFail($id);
-//        $maker = new MakeRevision($eval);
-//
-//        if($maker->make()){
-//            return 'created';
-//        }
-//
-//        return $id;
-
         return Version::make(Evaluation::findOrFail($id));
+    }
+
+    public function restore($id, $version)
+    {
+        $eval = Evaluation::findOrFail($id);
+
+        if (!$eval->isRevisionExist($version)) {
+            Version::make($eval, false);
+        }
+
+        return Version::restore(Evaluation::findOrFail($id), $version);
     }
 }
