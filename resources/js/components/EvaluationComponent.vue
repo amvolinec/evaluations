@@ -280,12 +280,14 @@ export default {
         getDate() {
             const event = new Date(Date.now());
             return event.toLocaleString('lt-LT', {timeZone: 'UTC'})
+
         }, sumTime() {
             let time = 0;
             this.revals.forEach(function (e) {
                 time += parseInt(e.time);
             });
             this.time = time;
+
         }, emptyFields() {
             this.task = 0;
             this.time = 0;
@@ -300,6 +302,7 @@ export default {
             this.evalClient = 'Telia';
             this.edit = false;
             this.isSaved = false;
+
         }, castData(r) {
 
             let d = r.eval;
@@ -318,6 +321,7 @@ export default {
             this.sumTime();
 
         }, checkData() {
+
             this.message = '';
 
             if (this.$root.$data.task === 0) {
@@ -336,18 +340,24 @@ export default {
             // this.revals.splice(event.newIndex, 0, this.revals.splice(event.oldIndex, 1)[0])
         },
         onChanged: function (event) {
+
             this.isSaved = false;
             this.options.push({name: this.newOption});
             this.newOption = '';
+
         }, itemClone() {
+
             axios.post('/clone/', {'id': this.evald, 'options': this.options, 'items': this.revals}).then(r => {
                 console.log(r.data);
             }).catch((error) => {
                 this.$root.fetchError(error);
             });
+
         }, showPopup() {
+
             this.popup = true;
             this.timeTemp = this.time;
+
         }, recalc() {
             this.popup = false;
             this.timeTemp = this.timeTemp.trim();
@@ -444,7 +454,13 @@ export default {
 
             axios.get('/evaluations/' + this.evald + '/revision/' + this.version).then((r) => {
 
-                this.get(this.evald);
+                console.log(r.data);
+                this.revals = r.data.items;
+                // this.version = r.data.version;
+
+                this.sumTime();
+
+                // this.get(this.evald);
 
             }).catch((error) => {
 

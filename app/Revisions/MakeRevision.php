@@ -56,6 +56,6 @@ class MakeRevision
 
         event(new NewEvaluation());
 
-        return $eval->items;
+        return Evaluation::where('id', $eval->id)->with(['items', 'options'])->first();
     }
 }

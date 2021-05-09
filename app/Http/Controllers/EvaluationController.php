@@ -294,6 +294,8 @@ class EvaluationController extends Controller
     public function restore($id, $version)
     {
         $eval = Evaluation::findOrFail($id);
+        $eval->version = $version;
+        $eval->save();
 
         if (!$eval->isRevisionExist($version)) {
             Version::make($eval, false);
