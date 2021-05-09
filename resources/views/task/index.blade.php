@@ -5,18 +5,18 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="d-inline-block" style="vertical-align: top;">
+                    <div class="card-header d-flex">
+                        <div class="p-2" style="vertical-align: top;">
                             <form action="{{ route('task.create') }}">
                                 @method('post')
                                 @csrf
                                 <button class="btn btn-success"><i aria-hidden="true" class="fa fa-plus"></i></button>
                             </form>
                         </div>
-                        <div class="d-inline-block" style="vertical-align: top; padding: 6px;">
+                        <div class="p-2">
                             <h4 >{{ __('Tasks') }}</h4>
                         </div>
-                        <find route="task" fields="" search="{{ $search ?? '' }}"></find>
+                        <find route="task" fields="name" search="{{ $search ?? '' }}"></find>
                     </div>
                     <div class="card-body">
                         <table class="table table-sm table-striped table-responsive-md">

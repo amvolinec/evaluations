@@ -94,19 +94,17 @@ class TaskController extends Controller
         return redirect()->route('task.index');
     }
 
-    public function find(Request $request, $search = false)
+    public function find(Request $request, $search = null)
     {
         $string = $search ?? $request->get('string');
 
-        $data = Task::where('name', 'like', '%' . $string . '%')
-            // ->orWhere('title', 'like', '%' . $string . '%')
-            ;
+        $data = Task::where('name', 'like', '%' . $string . '%');
 
         if ($search !== false && !empty($search)) {
             return view('task.index', ['tasks' => $data->paginate(20), 'search' => $string]);
-        } else {
-            return $data->take(10)->get();
         }
+
+        return $data->take(10)->get();
     }
 
     public function get($task)

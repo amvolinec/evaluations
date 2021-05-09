@@ -108,7 +108,7 @@ class GroupController extends Controller
         return redirect()->route('group.index');
     }
 
-    public function find(Request $request, $search = false)
+    public function find(Request $request, $search =  null)
     {
         $string = $search ?? $request->get('string');
 
@@ -118,7 +118,7 @@ class GroupController extends Controller
             return view('group.index', ['groups' => $data->paginate(20), 'search' => $string]);
         }
 
-        return $data->take(10)->get();
+        return $data->take(20)->get();
     }
 
     public function get()
