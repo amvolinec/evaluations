@@ -5,18 +5,16 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="d-inline-block" style="vertical-align: top;">
+                    <div class="card-header d-flex">
+                        <div class="p-2" style="vertical-align: top;">
                             <form action="{{ route('group.create') }}">
                                 @method('post')
                                 @csrf
                                 <button class="btn btn-success"><i aria-hidden="true" class="fa fa-plus"></i></button>
                             </form>
                         </div>
-                        <div class="d-inline-block" style="vertical-align: top; padding: 6px;">
-                            <h4 >{{ __('Groups') }}</h4>
-                        </div>
-                        <find route="group" fields="" search="{{ $search ?? '' }}"></find>
+                        <div style="padding: 6px; margin: 8px;position: relative;"><h4>{{ __('Groups') }}</h4></div>
+                        <find route="group" fields="name" search="{{ $search ?? '' }}"></find>
                     </div>
                     <div class="card-body">
                         <table class="table table-sm table-striped table-responsive-md">
@@ -24,9 +22,9 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">{{ __("Name") }}</th>
-								<th scope="col">{{ __("Description") }}</th>
-								<th scope="col">{{ __("Selected") }}</th>
-								<th scope="col">{{ __("Position") }}</th>
+                                <th scope="col">{{ __("Description") }}</th>
+                                <th scope="col">{{ __("Selected") }}</th>
+                                <th scope="col">{{ __("Position") }}</th>
 
                                 <th scope="col" style="width: 100px;">{{ __('Actions') }}</th>
                             </tr>
@@ -36,16 +34,17 @@
                                 <tr>
                                     <th scope="row">{{ $group->id  }}</th>
                                     <td>{{ $group->name }}</td>
-									<td>{{ $group->description }}</td>
-									<td>{{ $group->selected }}</td>
-									<td>{{ $group->position }}</td>
+                                    <td>{{ $group->description }}</td>
+                                    <td>{{ $group->selected }}</td>
+                                    <td>{{ $group->position }}</td>
 
                                     <td>
                                         <form class="float-right" action="{{ route('group.destroy', $group->id) }}"
                                               method="post" onsubmit="return confirm('Do you really want to delete?');">
                                             @method('delete')
                                             @csrf
-                                            <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" type="submit"><i
+                                                    class="fa fa-trash"></i></button>
                                         </form>
                                         <a class="btn btn-sm btn-outline-success float-right" style="margin: 0 8px;"
                                            href="{{ route('group.edit', $group->id) }}"><i class="fa fa-edit"></i></a>

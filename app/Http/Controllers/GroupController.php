@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\NewGroup;
 use App\Group;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -111,14 +112,13 @@ class GroupController extends Controller
     {
         $string = $search ?? $request->get('string');
 
-        $data = Group::where('name', 'like', '%' . $string . '%')// ->orWhere('title', 'like', '%' . $string . '%')
-        ;
+        $data = Group::where('name', 'like', '%' . $string . '%');
 
         if ($search !== false && !empty($search)) {
             return view('group.index', ['groups' => $data->paginate(20), 'search' => $string]);
-        } else {
-            return $data->take(10)->get();
         }
+
+        return $data->take(10)->get();
     }
 
     public function get()
