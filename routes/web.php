@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('evaluations/get/', 'EvaluationController@getOne');
     Route::post('evaluations/revision/{id}', 'EvaluationController@revision');
+    Route::get('evaluations/{id}/revision/{version}', 'EvaluationController@restore')->name('eval.restore');
+    Route::get('evaluations/{id}/revision/{version}/exist', 'EvaluationController@isRevisionExist')->name('eval.revision.exist');
 
     Route::post('export/{id}','EvaluationController@export');
     Route::post('steps/find/', 'StepController@find');
@@ -45,6 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::post('users', 'UserController@set')->name('users.set');
 
     Route::post('clone', 'EvaluationController@clone')->name('eval.clone');
+
+    Route::get('versions/{id}', 'EvaluationController@versions')->name('eval.versions');
+
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {

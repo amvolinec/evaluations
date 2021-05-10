@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Revision extends Model
 {
-    protected $fillable = ["version", "evaluation_id", "name", "description", "time", "selected", "group_id", "user_id"];
+    protected $fillable = ["version", "evaluation_id",  "step_id", "name", "description", "time", "selected", "group_id", "user_id"];
 
     public function evaluation()
     {

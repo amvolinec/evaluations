@@ -21,6 +21,7 @@ class CreateRevisionsTable extends Migration
 			$table->string('description')->nullable();
 			$table->unsignedInteger('time')->nullable();
 			$table->boolean('selected')->nullable();
+            $table->unsignedBigInteger('step_id')->default(0);
 
             $table->unsignedBigInteger('evaluation_id')->nullable();
 			$table->unsignedBigInteger('group_id')->nullable();

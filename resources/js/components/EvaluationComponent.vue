@@ -1,7 +1,7 @@
 <template>
 
     <div class="card" v-bind:class="{ saved: isSaved }" id="evals">
-        <div class="card-header">4. Evaluation</div>
+        <div class="card-header">4. Evaluation #ID {{ evald  }} v.{{ version }}</div>
         <div class="card-body">
 
             <div class="list-steps row" id="evaluations">
@@ -40,6 +40,7 @@
                         </div>
                     </draggable>
 
+
                     <div class="d-flex flex-row mt-3">
 
                         <div class="btn-group p-2">
@@ -62,6 +63,15 @@
                                 <i class="fa fa-undo" aria-hidden="true"></i></button>
                         </div>
 
+                        <div class="p-2" v-if="!popup && versions.length > 0">
+                            <select name="version" id="version" v-model="version">
+                                <option v-for="o in versions" v-bind:value="o.version">v.{{ o.version }} - {{ o.sum }} h</option>
+                            </select>
+                            <button class="btn btn-sm btn-outline-success" v-if="version > 0" @click="restore()"><i
+                                class="fa fa-undo"
+                                aria-hidden="true"></i></button>
+                        </div>
+
                     </div>
 
                     <div v-if="popup" class="ml-4 mb-3">
@@ -71,6 +81,8 @@
                     <div class="mt-3" v-if="message.length > 0">
                         <div class="alert alert-danger" v-text="message"></div>
                     </div>
+
+
 
                 </div>
 
@@ -167,7 +179,11 @@ export default {
             popup: false,
             timeTemp: "",
             newOption: '',
-            editOption: false
+            editOption: false,
+            diff: 0,
+            newTime: 0,
+            versions: [],
+            version: 1
         }
     },
     created() {
@@ -193,7 +209,11 @@ export default {
             this.isSaved = false;
         });
         this.$root.$on('loadEvaluation', (id) => {
-
+            this.get(id);
+        });
+    },
+    methods: {
+        get(id){
             axios.post('/evaluations/get/', {id: id})
                 .then((r) => {
                     this.castData(r.data);
@@ -202,9 +222,7 @@ export default {
             });
             this.edit = true;
             this.isSaved = true;
-        });
-    },
-    methods: {
+        },
         addOption() {
             this.options.push({name: '', edit: false});
             this.isSaved = false;
@@ -216,6 +234,7 @@ export default {
                     date: this.evalDate,
                     client: this.evalClient,
                     task_id: this.$root.$data.task,
+                    version: this.version,
                     options: this.options,
                     items: this.revals,
                 }).then((r) => {
@@ -238,7 +257,11 @@ export default {
                     items: this.revals,
                     id: this.evald
                 }).then((r) => {
+
                     console.log(r.data);
+                    this.version = r.data.version;
+                    this.versions = r.data.versions;
+
                 }).catch((error) => {
                     this.$root.fetchError(error);
                 });
@@ -257,12 +280,14 @@ export default {
         getDate() {
             const event = new Date(Date.now());
             return event.toLocaleString('lt-LT', {timeZone: 'UTC'})
+
         }, sumTime() {
             let time = 0;
             this.revals.forEach(function (e) {
                 time += parseInt(e.time);
             });
             this.time = time;
+
         }, emptyFields() {
             this.task = 0;
             this.time = 0;
@@ -277,7 +302,13 @@ export default {
             this.evalClient = 'Telia';
             this.edit = false;
             this.isSaved = false;
-        }, castData(d) {
+
+        }, castData(r) {
+
+            let d = r.eval;
+
+            this.versions = r.versions;
+
             this.evald = d.id;
             this.evalName = d.name;
             this.evalDate = d.date;
@@ -285,58 +316,67 @@ export default {
             this.task = d.task_id;
             this.revals = d.items;
             this.options = d.options;
+            this.version = d.version;
             this.$root.$data.task = d.task_id;
             this.sumTime();
+
         }, checkData() {
+
             this.message = '';
-            if (this.$root.$data.task == 0) {
+
+            if (this.$root.$data.task === 0) {
                 this.message += 'Select Task first!\n';
             }
-            if (this.options.length == 0) {
+            if (this.options.length === 0) {
                 this.message += 'Add options!\n';
             }
-            if (this.revals.length == 0) {
+            if (this.revals.length === 0) {
                 this.message += 'Add items!\n';
             }
-            if (this.message.length > 0) {
-                return false;
-            } else {
-                return true;
-            }
+
+            return this.message.length <= 0;
         },
         onUpdate: function (event) {
             // this.revals.splice(event.newIndex, 0, this.revals.splice(event.oldIndex, 1)[0])
         },
         onChanged: function (event) {
+
             this.isSaved = false;
             this.options.push({name: this.newOption});
             this.newOption = '';
+
         }, itemClone() {
+
             axios.post('/clone/', {'id': this.evald, 'options': this.options, 'items': this.revals}).then(r => {
                 console.log(r.data);
             }).catch((error) => {
                 this.$root.fetchError(error);
             });
+
         }, showPopup() {
+
             this.popup = true;
             this.timeTemp = this.time;
+
         }, recalc() {
             this.popup = false;
             this.timeTemp = this.timeTemp.trim();
-            let newVal = 0;
+            this.newTime = 0;
             let sign = this.timeTemp.substring(0, 1);
             let oldVal = parseInt(this.time);
 
             if (sign === '+' || sign === '-') {
-                newVal = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
-                newVal = oldVal + (newVal * 0.01 * oldVal)
+                this.newTime = parseInt(this.timeTemp.substring(0, this.timeTemp.length - 1))
+                this.newTime = oldVal + (this.newTime * 0.01 * oldVal)
             } else {
-                newVal = parseInt(this.timeTemp);
+                this.newTime = parseInt(this.timeTemp);
             }
+            this.diff = this.newTime - oldVal;
 
-            this.createRevision(newVal - oldVal);
+            this.createRevision();
 
-            console.log('new value ' + newVal + ' sign ' + sign);
+            console.log('new value ' + this.newTime + ' sign ' + sign);
+
         }, deleteOption(option) {
 
             let result = confirm("Do you really want to delete: " + option.name.substring(0, 50) + "... ?");
@@ -353,32 +393,81 @@ export default {
 
             this.isSaved = false;
 
-        }, createRevision(diff) {
-
-            if (diff === 0) return false;
+        }, storeRevision() {
 
             axios.post('/evaluations/revision/' + this.evald, {
                 id: this.evald,
-                diff: diff,
                 items: this.revals,
                 options: this.options
             }).then((r) => {
-                console.log(r.data);
+
+                if (r.data.status === 'success') {
+
+                    this.version = r.data.version;
+                    this.resolveDiff();
+                }
+
             }).catch((error) => {
                 this.$root.fetchError(error);
             });
 
+        }, createRevision() {
+
+            if (this.diff === 0) return false;
+
+            this.storeRevision();
+
             this.isSaved = false;
+
+        }, resolveDiff() {
+
+            if (typeof this.diff !== 'number' || this.diff === 0) {
+                console.log('Error with type diff ' + (typeof this.diff) + ' or diff = 0')
+                return
+            }
+
+            let v = this.diff > 0 ? 1 : -1;
+
+            do {
+                for (let i = 0; i < this.revals.length; i++) {
+
+                    if (this.diff !== 0) {
+
+                        if (i > 0) {
+                            this.revals[i].time += v;
+                            this.diff -= v;
+                        }
+
+                    } else {
+                        this.time = this.newTime
+                        return true;
+                    }
+
+                }
+            }
+            while (this.diff !== 0);
+
+            this.time = this.newTime
+            this.isSaved = false;
+
+        }, restore() {
+
+            axios.get('/evaluations/' + this.evald + '/revision/' + this.version).then((r) => {
+
+                console.log(r.data);
+                this.revals = r.data.items;
+                // this.version = r.data.version;
+
+                this.sumTime();
+
+                // this.get(this.evald);
+
+            }).catch((error) => {
+
+                this.$root.fetchError(error);
+
+            });
         }
-    }, computed: {
-        // revals: {
-        //     get() {
-        //         return this.$store.state.revals;
-        //     },
-        //     set(value) {
-        //         this.$store.commit('updateList', value);
-        //     }
-        // }
-    }
+    }, computed: {}
 }
 </script>

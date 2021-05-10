@@ -117,21 +117,23 @@ class StepController extends Controller
         return response()->json('Associated');
     }
 
-    public function find(Request $request, $search = false)
+    public function find(Request $request, $search = null)
     {
-        if ($request->ajax()) {
+        $string = $search ?? $request->get('string');
+
+        if (empty($string) && $request->ajax()) {
             $name = "%$request->name%";
             return Step::where('name', 'like', $name)->orderBy('name')->take(10)->get();
-        } else {
-            $string = $search ?? $request->get('string');
-            $data = Step::where('name', 'like', '%' . $string . '%');
-
-            if ($search !== false && !empty($search)) {
-                return view('step.index', ['steps' => $data->paginate(20), 'search' => $string]);
-            } else {
-                return $data->take(10)->get();
-            }
         }
+
+
+        $data = Step::where('name', 'like', '%' . $string . '%');
+
+        if ($search !== false && !empty($search)) {
+            return view('step.index', ['steps' => $data->paginate(20), 'search' => $string]);
+        }
+
+        return $data->take(10)->get();
     }
 
     public function get($task_id)

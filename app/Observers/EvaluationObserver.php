@@ -38,13 +38,15 @@ class EvaluationObserver
     {
         $request = request()->all();
 
-        Item::where('evaluation_id', $evaluation->id)->delete();
-        Option::where('evaluation_id', $evaluation->id)->delete();
+        if(!request()->isMethod('get')){
+            Item::where('evaluation_id', $evaluation->id)->delete();
+            Option::where('evaluation_id', $evaluation->id)->delete();
 
-        $this->fetchOptions($request['options'], $evaluation);
-        $this->fetchItems($request['items'], $evaluation);
+            $this->fetchOptions($request['options'], $evaluation);
+            $this->fetchItems($request['items'], $evaluation);
 
-        event(new NewEvaluation());
+            event(new NewEvaluation());
+        }
     }
 
     /**
@@ -91,7 +93,7 @@ class EvaluationObserver
         }
     }
 
-    protected function fetchItems($items, Evaluation $eval)
+    public function fetchItems($items, Evaluation $eval)
     {
         foreach ($items as $item) {
             $new_item = new Item();

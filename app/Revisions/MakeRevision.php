@@ -5,7 +5,11 @@ namespace App\Revisions;
 
 
 use App\Evaluation;
+use App\Events\NewEvaluation;
+use App\Item;
+use App\Observers\EvaluationObserver;
 use App\Revision;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class MakeRevision
@@ -13,29 +17,45 @@ class MakeRevision
 
     private Evaluation $evaluation;
 
-    public function __construct(Evaluation $evaluation)
+    public function make(Evaluation $evaluation, $new = true)
     {
 
         $this->evaluation = $evaluation;
-    }
 
-    public function make() {
+        if ($new) {
+            $this->evaluation->version = (int) $this->evaluation->last_version->version + 1;
+            $this->evaluation->save();
+        }
 
-        foreach ($this->evaluation->items as $item){
+        foreach ($this->evaluation->items as $item) {
             Revision::create([
                 'version' => $this->evaluation->version,
                 'name' => $item->name,
                 'description' => $item->description,
                 'time' => $item->time,
                 'evaluation_id' => $this->evaluation->id,
+                'step_id' => $item->step_id,
                 'group_id' => $item->group_id,
                 'user_id' => Auth::id()
             ]);
         }
 
-        $this->evaluation->version ++;
-        $this->evaluation->save();
+        return ['status' => 'success', 'version' => $this->evaluation->version];
+    }
 
-        return true;
+    public function restore(Evaluation $eval, $version)
+    {
+        $items = Revision::select('id', 'name', 'time', 'evaluation_id', 'step_id', 'group_id')
+            ->where([['evaluation_id', $eval->id], ['version', $version]])
+            ->get();
+
+        $eval->items()->delete();
+
+        $observer = new EvaluationObserver();
+        $observer->fetchItems($items, $eval);
+
+        event(new NewEvaluation());
+
+        return Evaluation::where('id', $eval->id)->with(['items', 'options'])->first();
     }
 }
