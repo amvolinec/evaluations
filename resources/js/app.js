@@ -19,6 +19,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 import Pagination from 'vue-pagination-2';
+import Vuetify from 'vuetify';
+Vue.use(Vuetify);
 
 Vue.component('groups', require('./components/GroupComponent.vue').default);
 Vue.component('tasks', require('./components/TasksComponent.vue').default);
@@ -28,6 +30,9 @@ Vue.component('eval-items', require('./components/ListComponent.vue').default);
 Vue.component('errors', require('./components/ErrorsComponent.vue').default);
 Vue.component('users', require('./components/UserComponent.vue').default);
 Vue.component('find', require('./components/FindComponent.vue').default);
+Vue.component('eval-component', require('./components/EvalComponent/EvalComponent.vue').default);
+
+
 Vue.component('pagination', Pagination);
 
 /**
@@ -38,6 +43,7 @@ Vue.component('pagination', Pagination);
 
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
     data: {
         group: 0,
         task: 0,
