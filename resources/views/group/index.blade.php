@@ -60,5 +60,6 @@
                 </div>
             </div>
         </div>
+        <eval-component></eval-component>
     </div>
 @endsection
