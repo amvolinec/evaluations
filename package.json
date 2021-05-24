@@ -12,7 +12,7 @@
     "devDependencies": {
         "axios": "^0.21.1",
         "bootstrap": "^4.0.0",
-        "cross-env": "^5.1",
+        "cross-env": "^5.2.1",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.20",
@@ -30,6 +30,7 @@
         "pusher-js": "^5.1.1",
         "vue-pagination-2": "^3.0.9",
         "vuedraggable": "^2.23.2",
+        "vuelidate": "^0.7.6",
         "vuetify": "^2.5.0"
     }
 }

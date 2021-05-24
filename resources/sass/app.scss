@@ -27,8 +27,15 @@
     src: url('/fonts/Courgette-Regular.ttf');
 }
 
+.v-application {
+    font-family: $body-font-family, sans-serif !important;
+    .title { // To pin point specific classes of some components
+        font-family: $title-font, sans-serif !important;
+    }
+}
+
 h1, h2, h3, h4, h5 {
-    font-family: 'OptimusPrinceps', sans-serif;
+    font-family: 'Nunito Black', sans-serif;
     color: #545b62;
 }
 
@@ -36,8 +43,7 @@ input, textarea {
     //font-size: $font-size !important;
     font-weight: $font-weight;
     padding: 2px;
-    border-radius: 2px;
-    border: 1px solid #e9ecefa6;
+    border: none;
     outline: none;
 }
 
@@ -45,7 +51,6 @@ input, textarea {
     cursor: pointer;
     padding: 0 6px;
     border-bottom: 1px solid #3f9ae51a;
-    /* line-height: 20px; */
 }
 
 .group-text {
@@ -203,10 +208,6 @@ span.bold {
     max-height: 927px;
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-input, textarea {
-    border: 1px solid #d3f7d5a6 !important;
 }
 
 .card-body {

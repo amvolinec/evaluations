@@ -68,4 +68,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::resource('step', 'StepController');
     Route::post('step/find/', 'StepController@find')->name('step.find');
     Route::get('step/find/{string}', 'StepController@find')->name('step.find.get');
+
+    Route::get('user', 'UserController@createUser')->name('user.create');
+    Route::post('user', 'UserController@addUser')->name('user.add');
 });

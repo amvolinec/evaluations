@@ -22,6 +22,15 @@ import Pagination from 'vue-pagination-2';
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 
+import Vue from 'vue'
+
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+// const validationMixin = Vuelidate.validationMixin;
+// const { required, maxLength, email } = validators;
+
+
 Vue.component('groups', require('./components/GroupComponent.vue').default);
 Vue.component('tasks', require('./components/TasksComponent.vue').default);
 Vue.component('steps', require('./components/StepsComponent.vue').default);
@@ -31,6 +40,7 @@ Vue.component('errors', require('./components/ErrorsComponent.vue').default);
 Vue.component('users', require('./components/UserComponent.vue').default);
 Vue.component('find', require('./components/FindComponent.vue').default);
 Vue.component('eval-component', require('./components/EvalComponent/EvalComponent.vue').default);
+Vue.component('create-user', require('./components/CreateUser/CreateUser.vue').default);
 
 
 Vue.component('pagination', Pagination);
@@ -53,15 +63,9 @@ const app = new Vue({
     methods: {
         fetchError(error){
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
                 this.error = true;
-                // let message = '';
-                // error.response.data.errors.forEach( (key, value) => {
-                //     message += e;
-                // });
                 this.errorMessage = error.response.data.message;
+                console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
             } else if (error.request) {
