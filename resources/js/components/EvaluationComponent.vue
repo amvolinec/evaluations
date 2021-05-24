@@ -1,7 +1,7 @@
 <template>
 
     <div class="card" v-bind:class="{ saved: isSaved }" id="evals">
-        <div class="card-header">4. Evaluation #ID {{ evald  }} v.{{ version }}</div>
+        <div class="card-header">4. Evaluation #ID {{ evald }} v.{{ version }}</div>
         <div class="card-body">
 
             <div class="list-steps row" id="evaluations">
@@ -65,7 +65,9 @@
 
                         <div class="p-2" v-if="!popup && versions.length > 0">
                             <select name="version" id="version" v-model="version">
-                                <option v-for="o in versions" v-bind:value="o.version">v.{{ o.version }} - {{ o.sum }} h</option>
+                                <option v-for="o in versions" v-bind:value="o.version">v.{{ o.version }} - {{ o.sum }}
+                                    h
+                                </option>
                             </select>
                             <button class="btn btn-sm btn-outline-success" v-if="version > 0" @click="restore()"><i
                                 class="fa fa-undo"
@@ -81,7 +83,6 @@
                     <div class="mt-3" v-if="message.length > 0">
                         <div class="alert alert-danger" v-text="message"></div>
                     </div>
-
 
 
                 </div>
@@ -213,13 +214,14 @@ export default {
         });
     },
     methods: {
-        get(id){
+        get(id) {
             axios.post('/evaluations/get/', {id: id})
                 .then((r) => {
                     this.castData(r.data);
-                }).catch((error) => {
-                this.$root.fetchError(error);
-            });
+                })
+                .catch((error) => {
+                    this.$root.fetchError(error);
+                });
             this.edit = true;
             this.isSaved = true;
         },
