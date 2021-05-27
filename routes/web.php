@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resources([
         'evaluation' => 'EvaluationController',
+        'scenario' => 'ScenarioController',
     ]);
 
     Route::get('groups', 'GroupController@get');

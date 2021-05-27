@@ -27,4 +27,8 @@ class Step extends Model
     public function getCountAttribute(){
         return $this->items()->count();
     }
+
+    public function scenarios() {
+        return $this->belongsToMany('App\Scenario');
+    }
 }

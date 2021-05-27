@@ -22,4 +22,8 @@ class Group extends Model
     {
         return $this->hasMany('App\Task');
     }
+
+    public function scenarios() {
+        return $this->belongsToMany('App\Scenario');
+    }
 }

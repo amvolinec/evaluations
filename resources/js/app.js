@@ -41,6 +41,7 @@ Vue.component('users', require('./components/UserComponent.vue').default);
 Vue.component('find', require('./components/FindComponent.vue').default);
 Vue.component('eval-component', require('./components/EvalComponent/EvalComponent.vue').default);
 Vue.component('create-user', require('./components/CreateUser/CreateUser.vue').default);
+Vue.component('scenario-list', require('./components/Scenario/Scenario.vue').default);
 
 
 Vue.component('pagination', Pagination);
