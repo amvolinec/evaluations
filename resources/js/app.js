@@ -27,9 +27,11 @@ import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
-// const validationMixin = Vuelidate.validationMixin;
-// const { required, maxLength, email } = validators;
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n)
 
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
 Vue.component('groups', require('./components/GroupComponent.vue').default);
 Vue.component('tasks', require('./components/TasksComponent.vue').default);
@@ -43,7 +45,6 @@ Vue.component('eval-component', require('./components/EvalComponent/EvalComponen
 Vue.component('create-user', require('./components/CreateUser/CreateUser.vue').default);
 Vue.component('scenario-list', require('./components/Scenario/Scenario.vue').default);
 
-
 Vue.component('pagination', Pagination);
 
 /**
@@ -55,6 +56,8 @@ Vue.component('pagination', Pagination);
 const app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
+    // store: new Vuex.Store(),
+    // i18n,
     data: {
         group: 0,
         task: 0,
