@@ -345,7 +345,6 @@ export default {
 
             this.editOption = false;
             this.isSaved = false;
-            this.options.push({name: this.newOption});
             this.newOption = '';
 
         }, itemClone() {
