@@ -25,7 +25,7 @@
                         <input type="hidden" v-model="task">
                     </div>
 
-                    <h5 class="text-center m-1">Answer</h5>
+                    <h5 class="text-center m-1">Answer:</h5>
                     <draggable v-model="revals" draggable=".group-line">
                         <div class="group-line no-border" v-for="reval in revals">
                             <div>
@@ -88,10 +88,10 @@
                 </div>
 
                 <div class="col-md-12">
-                    <h5 class="text-center m-1">Inquiry</h5>
+                    <h5 class="text-center m-1">Inquiry:</h5>
 
                     <div class="btm-group m-2">
-                        <button class="btn btn-sm btn-outline-success" v-on:click="editOption=true;isSaved=false"><i
+                        <button class="btn btn-sm btn-outline-success" v-on:click="addOption"><i
                             class="fa fa-plus"
                             aria-hidden="true"></i></button>
                         <button class="btn btn-sm btn-success" v-if="editOption" @click="onChanged"><i
@@ -150,6 +150,12 @@
                     </div>
 
                 </div>
+
+                <div class="col-md-12">
+                    <h5 class="text-center m-1">Specifications:</h5>
+                    <ckeditor v-model="specification" :config="editorConfig"></ckeditor>
+                </div>
+
             </div>
 
         </div>
@@ -184,7 +190,9 @@ export default {
             diff: 0,
             newTime: 0,
             versions: [],
-            version: 1
+            version: 1,
+            specification: '',
+            editorConfig: {}
         }
     },
     created() {
@@ -228,6 +236,7 @@ export default {
         addOption() {
             this.options.push({name: '', edit: false});
             this.isSaved = false;
+            // this.editOption = true;
         },
         storeEvaluation() {
             if (this.checkData()) {
@@ -239,6 +248,7 @@ export default {
                     version: this.version,
                     options: this.options,
                     items: this.revals,
+                    specification: this.specification,
                 }).then((r) => {
                     this.evalId = r.data;
                 }).catch((error) => {
@@ -257,7 +267,8 @@ export default {
                     task_id: this.$root.$data.task,
                     options: this.options,
                     items: this.revals,
-                    id: this.evald
+                    id: this.evald,
+                    specification: this.specification,
                 }).then((r) => {
 
                     console.log(r.data);
@@ -304,8 +315,9 @@ export default {
             this.evalClient = 'Telia';
             this.edit = false;
             this.isSaved = false;
+            this.specification = '';
 
-        }, castData(r) {
+        }, castData: function (r) {
 
             let d = r.eval;
 
@@ -319,6 +331,7 @@ export default {
             this.revals = d.items;
             this.options = d.options;
             this.version = d.version;
+            this.specification = d.specification;
             this.$root.$data.task = d.task_id;
             this.sumTime();
 

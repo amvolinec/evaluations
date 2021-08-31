@@ -214,6 +214,11 @@ class EvaluationController extends Controller
         }
 
         $section->addTextBreak(1);
+        $section->addText('Specifikacija: ', array('name' => $font, 'size' => 10, 5, 'bold' => true));
+
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $e->specification);
+
+        $section->addTextBreak(1);
         $section->addText('Atsakymas: ', array('name' => $font, 'size' => 10, 5, 'bold' => true));
 
         foreach ($items as $item) {

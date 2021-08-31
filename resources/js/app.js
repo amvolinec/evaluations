@@ -33,6 +33,9 @@ Vue.use(VueI18n)
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import CKEditor from 'ckeditor4-vue';
+Vue.use( CKEditor );
+
 Vue.component('groups', require('./components/GroupComponent.vue').default);
 Vue.component('tasks', require('./components/TasksComponent.vue').default);
 Vue.component('steps', require('./components/StepsComponent.vue').default);

@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluation extends Model
 {
-    protected $fillable = [
-        'name', 'date', 'client', 'task_id', 'version'
-    ];
+//    protected $fillable = [
+//        'name', 'date', 'client', 'task_id', 'version'
+//    ];
+
+    protected $guarded = [];
 
     public function items()
     {
@@ -23,6 +25,11 @@ class Evaluation extends Model
     public function revisions()
     {
         return $this->hasMany('App\Revision');
+    }
+
+    public function specifications()
+    {
+        return $this->hasMany('App\Specification');
     }
 
     public function getLastVersionAttribute()

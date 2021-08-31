@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-2">
 
     <div class="row">
 
@@ -23,7 +23,7 @@
 
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 
     <div class="card">
         <div class="card-header">3. {{ __('Steps') }}</div>
@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<div class="col-md-5">
+<div class="col-md-7">
     <evaluations></evaluations>
 </div>
 
